@@ -42,8 +42,8 @@ module tt_um_sr_ga1_srb2149 (
     
     always_comb
     begin : IO_Dirs
-        uio_oe = {ddio_dir, 3b111, 3b000};
-        uio_out[2:0] = 0;
+        uio_oe = {ddio_dir, 3'b111, 3'b000};
+        uio_out[2:0] = '0;
     end
 
 endmodule
