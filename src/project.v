@@ -24,8 +24,8 @@ module tt_um_sr_ga1_srb2149 (
     SR_GA1 sr_ga1_u (
         // Programming interface
         .shift_clk(clk),
-        shift_data_in(ui_in[0]),
-        shift_data_out(uo_out[0]), //DFT
+        .shift_data_in(ui_in[0]),
+        .shift_data_out(uo_out[0]), //DFT
 
         // Global synchronous reset (positive trigger)
         .reset(!rst_n),
