@@ -21,7 +21,7 @@ module tt_um_sr_ga1_srb2149 (
     
     logic [1:0] ddio_dir;
 
-    SR_GA1 (
+    SR_GA1 sr_ga1_u (
         // Programming interface
         .shift_clk(clk),
         shift_data_in(ui_in[0]),
