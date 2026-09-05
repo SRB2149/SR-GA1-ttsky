@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2024 Your Name
+ * Copyright (c) 2024 Stanley Booth
  * SPDX-License-Identifier: Apache-2.0
  */
 
 `default_nettype none
 
-module tt_um_example (
+module tt_sr_ga1_srb2149 (
     input  wire [7:0] ui_in,    // Dedicated inputs
     output wire [7:0] uo_out,   // Dedicated outputs
     input  wire [7:0] uio_in,   // IOs: Input path
@@ -16,12 +16,34 @@ module tt_um_example (
     input  wire       rst_n     // reset_n - low to reset
 );
 
-  // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
-  assign uio_out = 0;
-  assign uio_oe  = 0;
+    // List all unused inputs to prevent warnings
+    wire _unused = &{ena, 1'b0};
+    
+    logic [1:0] ddio_dir;
 
-  // List all unused inputs to prevent warnings
-  wire _unused = &{ena, clk, rst_n, 1'b0};
+    SR_GA1 (
+        // Programming interface
+        .shift_clk(clk),
+        shift_data_in(ui_in[0]),
+        shift_data_out(uo_out[0]), //DFT
+
+        // Global synchronous reset (positive trigger)
+        .reset(!rst_n),
+
+        // Chip IO
+        .inputs({uio_in[2:0], ui_in[7:1]}),
+        .outputs({uio_out[5:3], uo_out[7:1]}),
+
+        // Chip Dual-Direction IO
+        .ddio_in(uio_in[7:6]),
+        .ddio_dir(ddio_dir),
+        .ddio_out(uio_out[7:6])
+    );
+    
+    always_comb
+    begin : IO_Dirs
+        uio_oe = {ddio_dir, 3b111, 3b000};
+        uio_out[2:0] = 0;
+    end
 
 endmodule
