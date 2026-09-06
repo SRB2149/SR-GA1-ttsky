@@ -195,6 +195,10 @@ $macrosBody = (($macrosJson -split "`n") |
                Where-Object { $_.Trim() -ne "" } |
                ForEach-Object { $_.TrimEnd() }) -join "`n"
 
+# The end marker is a JSON entry in its own right, so the MACROS entry that
+# precedes it needs a trailing comma.
+$macrosBody = $macrosBody + ","
+
 if ($DryRun) {
     Write-Host ""
     Write-Host "--- DRY RUN: config.json not modified ---"
