@@ -47,6 +47,12 @@ param(
     [string]$MacroName      = "CLB",
     [string]$InstancePrefix = "row",
 
+    # Prefix applied to the macro paths WRITTEN INTO config.json. The paths in
+    # the config are resolved relative to the config file's own directory
+    # (src/), while this script is run from the repo root, so the two differ.
+    # Filesystem checks below use the unprefixed paths.
+    [string]$ConfigPathPrefix = "src/",
+
     # Instance naming: "generate" produces row[R].col[C].clb_inst to match
     # SystemVerilog generate blocks. "flat" produces clb_R_C.
     [ValidateSet("generate", "flat")]
@@ -64,6 +70,18 @@ $EndMarker   = '  "//": "END GENERATED MACROS"'
 function Assert-Path {
     param([string]$Path, [string]$What)
     if (-not (Test-Path $Path)) { throw "$What not found: $Path" }
+}
+
+function ConvertTo-ConfigPath {
+    # Normalize separators and apply the prefix used inside config.json.
+    param([string]$Path)
+    $p = $Path -replace '\\', '/'
+    if ([string]::IsNullOrEmpty($ConfigPathPrefix)) { return $p }
+    $prefix = $ConfigPathPrefix -replace '\\', '/'
+    if (-not $prefix.EndsWith("/")) { $prefix += "/" }
+    # Don't double up if the caller already passed a prefixed path.
+    if ($p.StartsWith($prefix)) { return $p }
+    return "$prefix$p"
 }
 
 Assert-Path $ConfigPath  "config.json"
@@ -134,7 +152,7 @@ if ($cornerDirs.Count -gt 0) {
         $libFile = Get-ChildItem -Path $dir.FullName -Filter "*.lib" -File |
                    Where-Object { $_.Name -notlike "*Zone.Identifier*" } | Select-Object -First 1
         if ($libFile) {
-            $libDict[$dir.Name] = @(("$MacroLibDir/$($dir.Name)/$($libFile.Name)" -replace '\\', '/'))
+            $libDict[$dir.Name] = @((ConvertTo-ConfigPath "$MacroLibDir/$($dir.Name)/$($libFile.Name)"))
             Write-Verbose "  corner $($dir.Name) -> $($libFile.Name)"
         }
     }
@@ -142,7 +160,7 @@ if ($cornerDirs.Count -gt 0) {
     foreach ($libFile in (Get-ChildItem -Path $MacroLibDir -Filter "*.lib" -File |
                           Where-Object { $_.Name -notlike "*Zone.Identifier*" })) {
         if ($libFile.BaseName -match "__(.+)$") {
-            $libDict[$Matches[1]] = @(("$MacroLibDir/$($libFile.Name)" -replace '\\', '/'))
+            $libDict[$Matches[1]] = @((ConvertTo-ConfigPath "$MacroLibDir/$($libFile.Name)"))
             Write-Verbose "  corner $($Matches[1]) -> $($libFile.Name)"
         }
     }
@@ -172,12 +190,12 @@ for ($r = 0; $r -lt $Rows; $r++) {
 }
 
 $macroEntry = [ordered]@{
-    gds = @($MacroGds -replace '\\', '/')
-    lef = @($MacroLef -replace '\\', '/')
+    gds = @((ConvertTo-ConfigPath $MacroGds))
+    lef = @((ConvertTo-ConfigPath $MacroLef))
     lib = $libDict
 }
 if (Test-Path $MacroNl) {
-    $macroEntry.nl = @($MacroNl -replace '\\', '/')
+    $macroEntry.nl = @((ConvertTo-ConfigPath $MacroNl))
 } else {
     Write-Warning "Macro netlist not found at $MacroNl - omitting 'nl'."
 }

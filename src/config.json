@@ -75,42 +75,42 @@
     "MACROS":  {
                    "CLB":  {
                                "gds":  [
-                                           "clb_macro/CLB.gds"
+                                           "src/clb_macro/CLB.gds"
                                        ],
                                "lef":  [
-                                           "clb_macro/CLB.lef"
+                                           "src/clb_macro/CLB.lef"
                                        ],
                                "lib":  {
                                            "max_ff_n40C_1v95":  [
-                                                                    "clb_macro/lib/max_ff_n40C_1v95/CLB__max_ff_n40C_1v95.lib"
+                                                                    "src/clb_macro/lib/max_ff_n40C_1v95/CLB__max_ff_n40C_1v95.lib"
                                                                 ],
                                            "max_ss_100C_1v60":  [
-                                                                    "clb_macro/lib/max_ss_100C_1v60/CLB__max_ss_100C_1v60.lib"
+                                                                    "src/clb_macro/lib/max_ss_100C_1v60/CLB__max_ss_100C_1v60.lib"
                                                                 ],
                                            "max_tt_025C_1v80":  [
-                                                                    "clb_macro/lib/max_tt_025C_1v80/CLB__max_tt_025C_1v80.lib"
+                                                                    "src/clb_macro/lib/max_tt_025C_1v80/CLB__max_tt_025C_1v80.lib"
                                                                 ],
                                            "min_ff_n40C_1v95":  [
-                                                                    "clb_macro/lib/min_ff_n40C_1v95/CLB__min_ff_n40C_1v95.lib"
+                                                                    "src/clb_macro/lib/min_ff_n40C_1v95/CLB__min_ff_n40C_1v95.lib"
                                                                 ],
                                            "min_ss_100C_1v60":  [
-                                                                    "clb_macro/lib/min_ss_100C_1v60/CLB__min_ss_100C_1v60.lib"
+                                                                    "src/clb_macro/lib/min_ss_100C_1v60/CLB__min_ss_100C_1v60.lib"
                                                                 ],
                                            "min_tt_025C_1v80":  [
-                                                                    "clb_macro/lib/min_tt_025C_1v80/CLB__min_tt_025C_1v80.lib"
+                                                                    "src/clb_macro/lib/min_tt_025C_1v80/CLB__min_tt_025C_1v80.lib"
                                                                 ],
                                            "nom_ff_n40C_1v95":  [
-                                                                    "clb_macro/lib/nom_ff_n40C_1v95/CLB__nom_ff_n40C_1v95.lib"
+                                                                    "src/clb_macro/lib/nom_ff_n40C_1v95/CLB__nom_ff_n40C_1v95.lib"
                                                                 ],
                                            "nom_ss_100C_1v60":  [
-                                                                    "clb_macro/lib/nom_ss_100C_1v60/CLB__nom_ss_100C_1v60.lib"
+                                                                    "src/clb_macro/lib/nom_ss_100C_1v60/CLB__nom_ss_100C_1v60.lib"
                                                                 ],
                                            "nom_tt_025C_1v80":  [
-                                                                    "clb_macro/lib/nom_tt_025C_1v80/CLB__nom_tt_025C_1v80.lib"
+                                                                    "src/clb_macro/lib/nom_tt_025C_1v80/CLB__nom_tt_025C_1v80.lib"
                                                                 ]
                                        },
                                "nl":  [
-                                          "clb_macro/CLB.nl.v"
+                                          "src/clb_macro/CLB.nl.v"
                                       ],
                                "instances":  {
                                                  "row[0].col[0].clb_inst":  {
