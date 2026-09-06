@@ -47,14 +47,24 @@ param(
     [string]$MacroName      = "CLB",
     [string]$InstancePrefix = "row",
 
+    # The instance name of the macro inside the innermost generate block, i.e.
+    # the identifier in "CLB <name> (" in your RTL.
+    [string]$InstanceName = "clb_u",
+
+    # Prepended to every generated instance path. Needed because the grid module
+    # is instantiated inside the tt_um_* wrapper rather than being the top
+    # module. Include the trailing dot. Set to "" if synthesis flattens the
+    # hierarchy and the prefix does not appear in the netlist.
+    [string]$HierarchyPrefix = "clb_grid_u.",
+
     # Prefix applied to the macro paths WRITTEN INTO config.json. The paths in
     # the config are resolved relative to the config file's own directory
     # (src/), while this script is run from the repo root, so the two differ.
     # Filesystem checks below use the unprefixed paths.
     [string]$ConfigPathPrefix = "src/",
 
-    # Instance naming: "generate" produces row[R].col[C].clb_inst to match
-    # SystemVerilog generate blocks. "flat" produces clb_R_C.
+    # Instance naming: "generate" produces row[R].col[C].<InstanceName> to match
+    # SystemVerilog generate blocks. "flat" produces <InstanceName>_R_C.
     [ValidateSet("generate", "flat")]
     [string]$NameStyle = "generate",
 
@@ -177,9 +187,9 @@ $instances = [ordered]@{}
 for ($r = 0; $r -lt $Rows; $r++) {
     for ($c = 0; $c -lt $Cols; $c++) {
         $name = if ($NameStyle -eq "generate") {
-            "$InstancePrefix[$r].col[$c].clb_inst"
+            "$HierarchyPrefix$InstancePrefix[$r].col[$c].$InstanceName"
         } else {
-            "clb_${r}_${c}"
+            "$HierarchyPrefix${InstanceName}_${r}_${c}"
         }
         $instances[$name] = [ordered]@{
             location    = @([math]::Round($originX + ($c * $pitchX), 3),
