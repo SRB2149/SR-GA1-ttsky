@@ -207,6 +207,14 @@ if ($DryRun) {
 $raw = Get-Content $ConfigPath -Raw
 Copy-Item $ConfigPath "$ConfigPath.bak" -Force
 
+# Strip a UTF-8 BOM if one is present (e.g. written by an older version of this
+# script). Tiny Tapeout's tooling reads the config with plain utf-8 and fails on
+# a BOM with "Unexpected UTF-8 BOM".
+if ($raw.Length -gt 0 -and [int]$raw[0] -eq 0xFEFF) {
+    Write-Verbose "Stripping existing UTF-8 BOM."
+    $raw = $raw.Substring(1)
+}
+
 # Remove a previously generated block so re-runs are idempotent.
 $pattern = [regex]::Escape($BeginMarker) + "(?s).*?" + [regex]::Escape($EndMarker) + "\r?\n?"
 if ($raw -match $pattern) {
@@ -226,7 +234,9 @@ $tail = $raw.Substring($lastBrace)
 # The preceding entry needs a trailing comma before the inserted block.
 if (-not $head.EndsWith(",")) { $head += "," }
 
-Set-Content -Path $ConfigPath -Value "$head`n$block`n$tail" -Encoding UTF8 -NoNewline
+$configFullPath = (Resolve-Path $ConfigPath).Path
+$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+[System.IO.File]::WriteAllText($configFullPath, "$head`n$block`n$tail", $utf8NoBom)
 
 Write-Host ""
 Write-Host "Spliced $($instances.Count) instances into $ConfigPath (backup: $ConfigPath.bak)"
