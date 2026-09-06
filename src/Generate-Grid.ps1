@@ -55,7 +55,7 @@ param(
     # is instantiated inside the tt_um_* wrapper rather than being the top
     # module. Include the trailing dot. Set to "" if synthesis flattens the
     # hierarchy and the prefix does not appear in the netlist.
-    [string]$HierarchyPrefix = "clb_grid_u.",
+    [string]$HierarchyPrefix = "sr_ga1_u.clb_grid_u.",
 
     # Prefix applied to the macro paths WRITTEN INTO config.json. The paths in
     # the config are resolved relative to the config file's own directory
