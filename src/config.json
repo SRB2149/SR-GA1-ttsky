@@ -16,7 +16,7 @@
   "PL_TARGET_DENSITY_PCT": 60,
 
   "//": "CLOCK_PERIOD - Increase this in case you are getting setup time violations.",
-  "//": "The value is in nanoseconds, so 100ns == 10MHz.",
+  "//": "The value is in nanoseconds, so 250ns == 4MHz.",
   "CLOCK_PERIOD": 250,
 
   "//": "Hold slack margin - Increase them in case you are getting hold violations.",
