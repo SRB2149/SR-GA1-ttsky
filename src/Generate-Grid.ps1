@@ -37,6 +37,13 @@ param(
     # checked-in config. Override if your tile count differs.
     [string]$DieArea = "0 0 334 216",
 
+    # Manual offset applied AFTER centering, in um. Positive X moves the array
+    # right, positive Y moves it up. Negative Y moves it down. Values are
+    # snapped to the site grid (0.46 um horizontally, 2.72 um vertically), so
+    # -2.72 shifts the array down by exactly one standard-cell row.
+    [double]$OffsetX = 0,
+    [double]$OffsetY = -2.72,
+
     # Paths, relative to the repo root (or absolute)
     [string]$ConfigPath  = "config.json",
     [string]$MacroLef    = "clb_macro/CLB.lef",
@@ -146,11 +153,32 @@ if ($gridW -gt $dieW -or $gridH -gt $dieH) {
 $siteW = 0.46
 $siteH = 2.72
 
-$originX = [math]::Round((($dieX1 + ($dieW - $gridW) / 2.0) / $siteW)) * $siteW
-$originY = [math]::Round((($dieY1 + ($dieH - $gridH) / 2.0) / $siteH)) * $siteH
+$centeredX = [math]::Round((($dieX1 + ($dieW - $gridW) / 2.0) / $siteW)) * $siteW
+$centeredY = [math]::Round((($dieY1 + ($dieH - $gridH) / 2.0) / $siteH)) * $siteH
 
-Write-Host ("Array origin:   {0:N3}, {1:N3} um (site-snapped)" -f $originX, $originY)
-Write-Host ("Free margin:    {0:N2} um each side horizontally, {1:N2} um vertically" -f (($dieW - $gridW) / 2), (($dieH - $gridH) / 2))
+# Apply the manual offset, snapped to the site grid so macros stay on legal
+# placement coordinates.
+$originX = $centeredX + ([math]::Round($OffsetX / $siteW) * $siteW)
+$originY = $centeredY + ([math]::Round($OffsetY / $siteH) * $siteH)
+
+Write-Host ("Centered at:    {0:N3}, {1:N3} um" -f $centeredX, $centeredY)
+if ($OffsetX -ne 0 -or $OffsetY -ne 0) {
+    Write-Host ("Offset applied: {0:N3}, {1:N3} um ({2} site cols, {3} cell rows)" -f `
+        ([math]::Round($OffsetX / $siteW) * $siteW), `
+        ([math]::Round($OffsetY / $siteH) * $siteH), `
+        [math]::Round($OffsetX / $siteW), `
+        [math]::Round($OffsetY / $siteH))
+}
+Write-Host ("Array origin:   {0:N3}, {1:N3} um" -f $originX, $originY)
+Write-Host ("Free margin:    {0:N2} um each side horizontally, {1:N2} um vertically (before offset)" -f (($dieW - $gridW) / 2), (($dieH - $gridH) / 2))
+
+# Warn if the offset pushes the array outside the die.
+$rightEdge = $originX + $gridW
+$topEdge   = $originY + $gridH
+if ($originX -lt $dieX1 -or $originY -lt $dieY1 -or $rightEdge -gt $dieX2 -or $topEdge -gt $dieY2) {
+    Write-Warning ("Offset pushes the array outside the die: occupies {0:N2},{1:N2} to {2:N2},{3:N2} but the die is {4},{5} to {6},{7}." -f `
+        $originX, $originY, $rightEdge, $topEdge, $dieX1, $dieY1, $dieX2, $dieY2)
+}
 
 # --- Discover timing corners ------------------------------------------------
 

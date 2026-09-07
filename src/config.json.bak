@@ -58,14 +58,8 @@
   "FP_IO_HLENGTH": 2,
   "FP_IO_VLENGTH": 2,
 
-  "//": "FP_PDN_VPITCH: 38.87,",
-  
-  "FP_PDN_VPITCH": 40.48,
-  "FP_PDN_VOFFSET": 42.66,
-  "FP_PDN_VWIDTH": 1.6,
-  "FP_PDN_VSPACING": 1.7,
-  "FP_PDN_HORIZONTAL_HALO": 0,
-  "FP_PDN_VERTICAL_HALO": 0,
+  "FP_PDN_VPITCH": 38.87,
+  "FP_PDN_HORIZONTAL_LAYER": "met3",
 
   "//": "Clock",
   "RUN_CTS": 1,
