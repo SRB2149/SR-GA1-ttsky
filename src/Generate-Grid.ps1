@@ -50,6 +50,7 @@ param(
     [string]$MacroGds    = "clb_macro/CLB.gds",
     [string]$MacroNl     = "clb_macro/CLB.nl.v",
     [string]$MacroLibDir = "clb_macro/lib",
+    [string]$MacroSpefDir = "clb_macro/spef",
 
     [string]$MacroName      = "CLB",
     [string]$InstancePrefix = "row",
@@ -99,6 +100,47 @@ function ConvertTo-ConfigPath {
     # Don't double up if the caller already passed a prefixed path.
     if ($p.StartsWith($prefix)) { return $p }
     return "$prefix$p"
+}
+
+function Get-CornerFiles {
+    # Discovers per-corner files, supporting both layouts:
+    #   <dir>/<corner>/<MacroName>__<corner>.<ext>   (nested, as OpenLane writes)
+    #   <dir>/<MacroName>__<corner>.<ext>            (flat)
+    param(
+        [string]$Directory,
+        [string]$Extension,   # e.g. "lib" or "spef"
+        [string]$Label
+    )
+
+    $result = [ordered]@{}
+
+    if (-not (Test-Path $Directory)) {
+        Write-Verbose "$Label directory not found: $Directory - skipping."
+        return $result
+    }
+
+    $cornerDirs = @(Get-ChildItem -Path $Directory -Directory -ErrorAction SilentlyContinue)
+
+    if ($cornerDirs.Count -gt 0) {
+        foreach ($dir in $cornerDirs) {
+            $file = Get-ChildItem -Path $dir.FullName -Filter "*.$Extension" -File |
+                    Where-Object { $_.Name -notlike "*Zone.Identifier*" } | Select-Object -First 1
+            if ($file) {
+                $result[$dir.Name] = @((ConvertTo-ConfigPath "$Directory/$($dir.Name)/$($file.Name)"))
+                Write-Verbose "  $Label corner $($dir.Name) -> $($file.Name)"
+            }
+        }
+    } else {
+        foreach ($file in (Get-ChildItem -Path $Directory -Filter "*.$Extension" -File |
+                           Where-Object { $_.Name -notlike "*Zone.Identifier*" })) {
+            if ($file.BaseName -match "__(.+)$") {
+                $result[$Matches[1]] = @((ConvertTo-ConfigPath "$Directory/$($file.Name)"))
+                Write-Verbose "  $Label corner $($Matches[1]) -> $($file.Name)"
+            }
+        }
+    }
+
+    return $result
 }
 
 Assert-Path $ConfigPath  "config.json"
@@ -182,32 +224,20 @@ if ($originX -lt $dieX1 -or $originY -lt $dieY1 -or $rightEdge -gt $dieX2 -or $t
 
 # --- Discover timing corners ------------------------------------------------
 
-$libDict = [ordered]@{}
-$cornerDirs = @(Get-ChildItem -Path $MacroLibDir -Directory -ErrorAction SilentlyContinue)
-
-if ($cornerDirs.Count -gt 0) {
-    foreach ($dir in $cornerDirs) {
-        $libFile = Get-ChildItem -Path $dir.FullName -Filter "*.lib" -File |
-                   Where-Object { $_.Name -notlike "*Zone.Identifier*" } | Select-Object -First 1
-        if ($libFile) {
-            $libDict[$dir.Name] = @((ConvertTo-ConfigPath "$MacroLibDir/$($dir.Name)/$($libFile.Name)"))
-            Write-Verbose "  corner $($dir.Name) -> $($libFile.Name)"
-        }
-    }
-} else {
-    foreach ($libFile in (Get-ChildItem -Path $MacroLibDir -Filter "*.lib" -File |
-                          Where-Object { $_.Name -notlike "*Zone.Identifier*" })) {
-        if ($libFile.BaseName -match "__(.+)$") {
-            $libDict[$Matches[1]] = @((ConvertTo-ConfigPath "$MacroLibDir/$($libFile.Name)"))
-            Write-Verbose "  corner $($Matches[1]) -> $($libFile.Name)"
-        }
-    }
-}
+$libDict = Get-CornerFiles -Directory $MacroLibDir -Extension "lib" -Label "lib"
 
 if ($libDict.Count -eq 0) {
     throw "No .lib files under $MacroLibDir. Expected <corner>/ subfolders, or files named ${MacroName}__<corner>.lib"
 }
-Write-Host "Timing corners: $($libDict.Count)"
+Write-Host "Timing corners: $($libDict.Count) lib"
+
+$spefDict = Get-CornerFiles -Directory $MacroSpefDir -Extension "spef" -Label "spef"
+
+if ($spefDict.Count -gt 0) {
+    Write-Host "                $($spefDict.Count) spef"
+} else {
+    Write-Warning "No .spef files under $MacroSpefDir. The 'nl' netlist cannot be used for timing without parasitics, so the flow will fall back to the .lib files."
+}
 
 # --- Build the MACROS object ------------------------------------------------
 
@@ -236,6 +266,9 @@ if (Test-Path $MacroNl) {
     $macroEntry.nl = @((ConvertTo-ConfigPath $MacroNl))
 } else {
     Write-Warning "Macro netlist not found at $MacroNl - omitting 'nl'."
+}
+if ($spefDict.Count -gt 0) {
+    $macroEntry.spef = $spefDict
 }
 $macroEntry.instances = $instances
 

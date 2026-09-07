@@ -113,6 +113,17 @@
                                "nl":  [
                                           "src/clb_macro/CLB.nl.v"
                                       ],
+                               "spef":  {
+                                            "max":  [
+                                                        "src/clb_macro/spef/max/CLB.max.spef"
+                                                    ],
+                                            "min":  [
+                                                        "src/clb_macro/spef/min/CLB.min.spef"
+                                                    ],
+                                            "nom":  [
+                                                        "src/clb_macro/spef/nom/CLB.nom.spef"
+                                                    ]
+                                        },
                                "instances":  {
                                                  "sr_ga1_u.clb_grid_u.row[0].col[0].clb_u":  {
                                                                                                  "location":  [
