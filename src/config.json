@@ -38,9 +38,9 @@
       "art_initials_u", "art_name_u", "art_logo_u"],
   "ERROR_ON_DISCONNECTED_PINS": false,
   "MACROS": {
-    "art_initials_u": {
+    "CHIP_ART_initials": {
       "instances": {
-        "chip_art_initials": {
+        "art_initials_u": {
           "location": [2.5, 2.5],
           "orientation": "W"
         }
@@ -48,9 +48,9 @@
       "gds": ["src/logos/gds/CHIP_ART_initials.gds"],
       "lef": ["src/logos/lef/CHIP_ART_initials.lef"]
     },
-    "art_logo_u": {
+    "CHIP_ART_logo": {
       "instances": {
-        "chip_art_logo": {
+        "art_logo_u": {
           "location": [2.5, 125],
           "orientation": "W"
         }
@@ -58,9 +58,9 @@
       "gds": ["src/logos/gds/CHIP_ART_logo.gds"],
       "lef": ["src/logos/lef/CHIP_ART_logo.lef"]
     },
-    "art_name_u": {
+    "CHIP_ART_name": {
       "instances": {
-        "chip_art_name": {
+        "art_name_u": {
           "location": [2.5, 30],
           "orientation": "W"
         }
