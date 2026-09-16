@@ -1,0 +1,20 @@
+    "CHIP_ART_initials": {
+      "instances": {
+        "art_initials_u": {
+          "location": [2.5, 2.5],
+          "orientation": "W"
+        }
+      },
+      "gds": ["logos/gds/CHIP_ART_initials.gds"],
+      "lef": ["logos/lef/CHIP_ART_initials.lef"]
+    },
+    "CHIP_ART_logo": {
+      "instances": {
+        "art_logo_u": {
+          "location": [2.5, 125],
+          "orientation": "W"
+        }
+      },
+      "gds": ["logos/gds/CHIP_ART_logo.gds"],
+      "lef": ["logos/lef/CHIP_ART_logo.lef"]
+    }

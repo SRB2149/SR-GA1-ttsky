@@ -41,8 +41,8 @@ param(
     # right, positive Y moves it up. Negative Y moves it down. Values are
     # snapped to the site grid (0.46 um horizontally, 2.72 um vertically), so
     # -2.72 shifts the array down by exactly one standard-cell row.
-    [double]$OffsetX = 10,
-    [double]$OffsetY = -5.44,
+    [double]$OffsetX = 0,
+    [double]$OffsetY = -2.72,
 
     # Paths, relative to the repo root (or absolute)
     [string]$ConfigPath  = "config.json",
@@ -70,6 +70,12 @@ param(
     # (src/), while this script is run from the repo root, so the two differ.
     # Filesystem checks below use the unprefixed paths.
     [string]$ConfigPathPrefix = "src/",
+
+    # A file containing additional macro entries to merge into the MACROS block
+    # verbatim. Content is the inner body of a MACROS object, i.e. one or more
+    # "NAME": { ... } entries separated by commas, WITHOUT the surrounding
+    # braces. Text is inserted exactly as written, not reformatted.
+    [string]$ExtraMacrosFile = "extra_macros.txt",
 
     # Instance naming: "generate" produces row[R].col[C].<InstanceName> to match
     # SystemVerilog generate blocks. "flat" produces <InstanceName>_R_C.
@@ -283,6 +289,37 @@ $macrosJson = $macrosJson.Substring(1, $macrosJson.Length - 2)
 $macrosBody = (($macrosJson -split "`n") |
                Where-Object { $_.Trim() -ne "" } |
                ForEach-Object { $_.TrimEnd() }) -join "`n"
+
+# Merge in extra macro entries, if a file was supplied. The text is inserted
+# verbatim inside the MACROS object, after the generated entry, so hand-written
+# macros (chip art, other blocks) survive regeneration of the grid.
+if (-not [string]::IsNullOrWhiteSpace($ExtraMacrosFile) -and (Test-Path $ExtraMacrosFile)) {
+    $extra = (Get-Content $ExtraMacrosFile -Raw).Trim()
+    # Tolerate a file that wraps its entries in braces.
+    if ($extra.StartsWith("{") -and $extra.EndsWith("}")) {
+        $extra = $extra.Substring(1, $extra.Length - 2).Trim()
+    }
+    $extra = $extra.TrimEnd(",").TrimEnd()
+
+    if ($extra.Length -gt 0) {
+        # macrosBody is:  "MACROS": {  <entries>  }
+        # Insert before the final closing brace of that object.
+        $closeIdx = $macrosBody.LastIndexOf("}")
+        if ($closeIdx -lt 0) { throw "Could not find the closing brace of the MACROS object." }
+
+        $bodyHead = $macrosBody.Substring(0, $closeIdx).TrimEnd()
+        $bodyTail = $macrosBody.Substring($closeIdx)
+
+        if (-not $bodyHead.EndsWith(",")) { $bodyHead += "," }
+
+        $macrosBody = "$bodyHead`n$extra`n$bodyTail"
+
+        $entryCount = ([regex]::Matches($extra, '(?m)^\s*"[^"]+"\s*:\s*\{')).Count
+        Write-Host "Merged extra macros from $ExtraMacrosFile ($entryCount top-level entr$(if ($entryCount -eq 1) {'y'} else {'ies'}) detected)."
+    }
+} elseif (-not [string]::IsNullOrWhiteSpace($ExtraMacrosFile)) {
+    Write-Verbose "No extra macros file at $ExtraMacrosFile - skipping."
+}
 
 # The end marker is a JSON entry in its own right, so the MACROS entry that
 # precedes it needs a trailing comma.

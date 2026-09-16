@@ -37,38 +37,6 @@
   "IGNORE_DISCONNECTED_MODULES": [
       "art_initials_u", "art_name_u", "art_logo_u"],
   "ERROR_ON_DISCONNECTED_PINS": false,
-  "MACROS": {
-    "CHIP_ART_initials": {
-      "instances": {
-        "art_initials_u": {
-          "location": [2.5, 2.5],
-          "orientation": "W"
-        }
-      },
-      "gds": ["src/logos/gds/CHIP_ART_initials.gds"],
-      "lef": ["src/logos/lef/CHIP_ART_initials.lef"]
-    },
-    "CHIP_ART_logo": {
-      "instances": {
-        "art_logo_u": {
-          "location": [2.5, 125],
-          "orientation": "W"
-        }
-      },
-      "gds": ["src/logos/gds/CHIP_ART_logo.gds"],
-      "lef": ["src/logos/lef/CHIP_ART_logo.lef"]
-    },
-    "CHIP_ART_name": {
-      "instances": {
-        "art_name_u": {
-          "location": [2.5, 30],
-          "orientation": "W"
-        }
-      },
-      "gds": ["src/logos/gds/CHIP_ART_name.gds"],
-      "lef": ["src/logos/lef/CHIP_ART_name.lef"]
-    }
-  },
 
 
   "//": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
@@ -360,7 +328,37 @@
                                                                                                  "orientation":  "N"
                                                                                              }
                                              }
-                           }
+                           },
+                           "CHIP_ART_initials": {
+      "instances": {
+        "art_initials_u": {
+          "location": [2.5, 2.5],
+          "orientation": "W"
+        }
+      },
+      "gds": ["src/logos/gds/CHIP_ART_initials.gds"],
+      "lef": ["src/logos/lef/CHIP_ART_initials.lef"]
+    },
+    "CHIP_ART_logo": {
+      "instances": {
+        "art_logo_u": {
+          "location": [2.5, 125],
+          "orientation": "W"
+        }
+      },
+      "gds": ["src/logos/gds/CHIP_ART_logo.gds"],
+      "lef": ["src/logos/lef/CHIP_ART_logo.lef"]
+    },
+    "CHIP_ART_name": {
+      "instances": {
+        "art_name_u": {
+          "location": [2.5, 30],
+          "orientation": "W"
+        }
+      },
+      "gds": ["src/logos/gds/CHIP_ART_name.gds"],
+      "lef": ["src/logos/lef/CHIP_ART_name.lef"]
+    }
                },
   "//": "END GENERATED MACROS"
 }
