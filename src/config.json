@@ -32,6 +32,44 @@
   "CLOCK_PORT": "clk",
 
   "//": "Configuration docs: https://librelane.readthedocs.io/en/latest/reference/configuration.html",
+  
+  "//": "CHIP ART",
+  "IGNORE_DISCONNECTED_MODULES": [
+      "art_initials_u", "art_name_u", "art_logo_u"],
+  "ERROR_ON_DISCONNECTED_PINS": false,
+  "MACROS": {
+    "art_initials_u": {
+      "instances": {
+        "chip_art_initials": {
+          "location": [2.5, 2.5],
+          "orientation": "W"
+        }
+      },
+      "gds": ["src/logos/gds/CHIP_ART_initials.gds"],
+      "lef": ["src/logos/lef/CHIP_ART_initials.lef"]
+    },
+    "art_logo_u": {
+      "instances": {
+        "chip_art_logo": {
+          "location": [2.5, 125],
+          "orientation": "W"
+        }
+      },
+      "gds": ["src/logos/gds/CHIP_ART_logo.gds"],
+      "lef": ["src/logos/lef/CHIP_ART_logo.lef"]
+    },
+    "art_name_u": {
+      "instances": {
+        "chip_art_name": {
+          "location": [2.5, 30],
+          "orientation": "W"
+        }
+      },
+      "gds": ["src/logos/gds/CHIP_ART_name.gds"],
+      "lef": ["src/logos/lef/CHIP_ART_name.lef"]
+    }
+  }
+
 
   "//": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
   "//": "!!! DO NOT CHANGE ANYTHING BELOW THIS POINT !!!",
