@@ -342,7 +342,7 @@
     "CHIP_ART_logo": {
       "instances": {
         "art_logo_u": {
-          "location": [3, 15],
+          "location": [3, 40],
           "orientation": "W"
         }
       },
@@ -352,7 +352,7 @@
     "CHIP_ART_name": {
       "instances": {
         "art_name_u": {
-          "location": [3, 25],
+          "location": [3, 120],
           "orientation": "W"
         }
       },
