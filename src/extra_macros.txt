@@ -1,20 +1,31 @@
-    "CHIP_ART_initials": {
+"CHIP_ART_initials": {
       "instances": {
         "art_initials_u": {
-          "location": [2.5, 2.5],
+          "location": [3, 170],
           "orientation": "W"
         }
       },
-      "gds": ["logos/gds/CHIP_ART_initials.gds"],
-      "lef": ["logos/lef/CHIP_ART_initials.lef"]
+      "gds": ["src/logos/gds/CHIP_ART_initials.gds"],
+      "lef": ["src/logos/lef/CHIP_ART_initials.lef"]
     },
     "CHIP_ART_logo": {
       "instances": {
         "art_logo_u": {
-          "location": [2.5, 125],
+          "location": [3, 130],
           "orientation": "W"
         }
       },
-      "gds": ["logos/gds/CHIP_ART_logo.gds"],
-      "lef": ["logos/lef/CHIP_ART_logo.lef"]
+      "gds": ["src/logos/gds/CHIP_ART_logo.gds"],
+      "lef": ["src/logos/lef/CHIP_ART_logo.lef"]
+    },
+    "CHIP_ART_name": {
+      "instances": {
+        "art_name_u": {
+          "location": [3, 5],
+          "orientation": "W"
+        }
+      },
+      "gds": ["src/logos/gds/CHIP_ART_name.gds"],
+      "lef": ["src/logos/lef/CHIP_ART_name.lef"]
     }
+               },
