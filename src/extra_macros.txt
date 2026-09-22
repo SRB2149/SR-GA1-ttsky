@@ -28,4 +28,3 @@
       "gds": ["src/logos/gds/CHIP_ART_name.gds"],
       "lef": ["src/logos/lef/CHIP_ART_name.lef"]
     }
-               },
