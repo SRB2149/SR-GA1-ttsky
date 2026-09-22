@@ -41,7 +41,7 @@ param(
     # right, positive Y moves it up. Negative Y moves it down. Values are
     # snapped to the site grid (0.46 um horizontally, 2.72 um vertically), so
     # -2.72 shifts the array down by exactly one standard-cell row.
-    [double]$OffsetX = 10,
+    [double]$OffsetX = 12,
     [double]$OffsetY = -5,
 
     # Paths, relative to the repo root (or absolute)
