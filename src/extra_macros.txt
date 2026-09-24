@@ -1,7 +1,7 @@
 "CHIP_ART_initials": {
       "instances": {
         "art_initials_u": {
-          "location": [3, 195],
+          "location": [3, 197.5],
           "orientation": "W"
         }
       },
