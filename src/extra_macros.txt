@@ -21,7 +21,7 @@
     "CHIP_ART_name": {
       "instances": {
         "art_name_u": {
-          "location": [3, 100],
+          "location": [3, 50],
           "orientation": "W"
         }
       },
