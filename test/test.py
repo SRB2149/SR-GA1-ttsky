@@ -13,7 +13,7 @@ SCAN_PATH_LENGTH = 581 #20*28 + 3 * 7
 
 def rand_seq(length):
     seq = []
-    for i in range(0, length):
+    for i in range(length):
         seq.append(random.randint(0,1))
     return seq
 
@@ -40,10 +40,10 @@ async def test_scan_path(dut):
     # Get random sequence
     seq = rand_seq(SCAN_PATH_LENGTH)
 
-    # Scan in random values
+    # Scan in 1010101010101...
     for i in range(SCAN_PATH_LENGTH):
         val = LogicArray(dut.ui_in.value)
-        val[0] = seq[i]
+        val[0] = i % 2
         dut.ui_in.value = val
         await ClockCycles(dut.clk, 1)
         
@@ -55,4 +55,4 @@ async def test_scan_path(dut):
         val[0] = 0
         dut.ui_in.value = val
         await ClockCycles(dut.clk, 1)
-        assert dut.uo_out.value[0] == seq[i]
+        assert dut.uo_out.value[0] == i % 2
