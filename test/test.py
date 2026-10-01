@@ -24,7 +24,7 @@ def const_seq(length, val):
         seq.append(val)
     return seq
 
-def scan_in(dut, seq):
+async def scan_in(dut, seq):
     for i in range(SCAN_PATH_LENGTH):
         if VERBOSE:
             dut._log.info(f"Loading bit[{i}] with value {seq[i]}")
