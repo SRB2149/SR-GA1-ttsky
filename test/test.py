@@ -5,13 +5,24 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import ClockCycles
 
+import random
+
+#CONSTANTS
+SCAN_PATH_LENGTH = 581 #20*28 + 3 * 7
+
+def rand_seq(length):
+    seq = []
+    for i in range(0, length):
+        seq.append(random.randint(0,1))
+    return seq
+
 
 @cocotb.test()
 async def test_project(dut):
     dut._log.info("Start")
 
-    # Set the clock period to 10 us (100 KHz)
-    clock = Clock(dut.clk, 10, unit="us")
+    # Set the clock period to 250 ns (4 MHz)
+    clock = Clock(dut.clk, 250, unit="ns")
     cocotb.start_soon(clock.start())
 
     # Reset
@@ -24,17 +35,17 @@ async def test_project(dut):
     dut.rst_n.value = 1
 
     dut._log.info("Test project behavior")
+    
+    # Get random sequence
+    seq = rand_seq(SCAN_PATH_LENGTH)
 
-    # Set the input values you want to test
-    dut.ui_in.value = 20
-    dut.uio_in.value = 30
-
-    # Wait for one clock cycle to see the output values
-    await ClockCycles(dut.clk, 1)
-
-    # The following assersion is just an example of how to check the output values.
-    # Change it to match the actual expected output of your module:
-    assert dut.uo_out.value == 50
-
-    # Keep testing the module by changing the input values, waiting for
-    # one or more clock cycles, and asserting the expected output values.
+    # Scan in random values
+    for i in range(0, SCAN_PATH_LENGTH):
+        dut.ui_in.value[0] = seq[i]
+        await ClockCycles(dut.clk, 1)
+    
+    # Check the output is correct
+    for i in range(0, SCAN_PATH_LENGTH):
+        dut.ui_in[0].value = 0
+        await ClockCycles(dut.clk, 1)
+        assert dut.uo_out[0].value == seq[i]
