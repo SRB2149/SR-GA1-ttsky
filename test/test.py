@@ -70,4 +70,4 @@ async def test_scan_path(dut):
         await ClockCycles(dut.clk, 1)
         assert dut.uo_out.value[0] == 1
         
-   dut._log.info(f"Read {SCAN_PATH_LENGTH} bits out of the programming shift register")
+    dut._log.info(f"Read {SCAN_PATH_LENGTH} bits out of the programming shift register")
