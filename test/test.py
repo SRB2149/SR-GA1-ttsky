@@ -21,15 +21,15 @@ def rand_seq(length):
 def const_seq(length, val):
     seq = []
     for i in range(length):
-        seq.append(val))
+        seq.append(val)
     return seq
 
 def scan_in(dut, seq):
     for i in range(SCAN_PATH_LENGTH):
         if VERBOSE:
-            dut._log.info(f"Loading bit: {i}")
+            dut._log.info(f"Loading bit[{i}] with value {seq[i]}")
         val = LogicArray(dut.ui_in.value)
-        val[0] = 1
+        val[0] = seq[i]
         dut.ui_in.value = val
         await ClockCycles(dut.clk, 1)
 
