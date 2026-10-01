@@ -1,6 +1,8 @@
 ![](../../workflows/gds/badge.svg) ![](../../workflows/docs/badge.svg) ![](../../workflows/test/badge.svg)
 
-# SR-GA1: An FPGA-lite device
+![The SR-GA1 Logo](docs/logo.png)
+
+# An FPGA-lite device
 - 28 Configurable Logic Blocks (CLBs) in a 7x4 array
 - 7 Column clock controllers which can be chained or source from the FPGA fabric
 - Supports carry chains to easily build up to 4-bit adders.
