@@ -19,7 +19,7 @@ def rand_seq(length):
 
 
 @cocotb.test()
-async def test_project(dut):
+async def test_scan_path(dut):
     dut._log.info("Start")
 
     # Set the clock period to 250 ns (4 MHz)
@@ -35,7 +35,7 @@ async def test_project(dut):
     await ClockCycles(dut.clk, 10)
     dut.rst_n.value = 1
 
-    dut._log.info("Test project behavior")
+    dut._log.info("Test scan path")
     
     # Get random sequence
     seq = rand_seq(SCAN_PATH_LENGTH)
@@ -46,6 +46,8 @@ async def test_project(dut):
         val[0] = seq[i]
         dut.ui_in.value = val
         await ClockCycles(dut.clk, 1)
+        
+    dut._log.info(f"Written {SCAN_PATH_LENGTH} bits into the programming shift register")
 
     # Check the output is correct
     for i in range(SCAN_PATH_LENGTH):
