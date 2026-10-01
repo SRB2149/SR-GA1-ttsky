@@ -57,7 +57,7 @@ async def test_scan_path(dut):
     seq = const_seq(SCAN_PATH_LENGTH, 1)
 
     # Scan in 111111111...
-    scan_in(dut, seq)
+    await scan_in(dut, seq)
         
     dut._log.info(f"Written {SCAN_PATH_LENGTH} bits into the programming shift register")
 
