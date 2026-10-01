@@ -57,7 +57,7 @@ async def test_scan_path(dut):
     seq = const_seq(SCAN_PATH_LENGTH, 1)
 
     # Scan in 111111111...
-    scan_in(dut, seq):
+    scan_in(dut, seq)
         
     dut._log.info(f"Written {SCAN_PATH_LENGTH} bits into the programming shift register")
 
@@ -69,3 +69,5 @@ async def test_scan_path(dut):
         dut.ui_in.value = val
         await ClockCycles(dut.clk, 1)
         assert dut.uo_out.value[0] == 1
+        
+   dut._log.info(f"Read {SCAN_PATH_LENGTH} bits out of the programming shift register")
