@@ -12,19 +12,19 @@
 
 # The CLB
 
-![The CLB itself](docs/clb.png)
-
- - 8 Logic functions:
-  - AND3
-  - OR3
-  - XOR3
-  - NAND3 
-  - NOR3 
-  - XNOR3 
-  - AO21
-  - MUX2
+ - 8 Logic functions (no LUT\*):
+    - AND3
+    - OR3
+    - XOR3 (doubles as SUM3 with carry out via carry chain)
+    - NAND3 
+    - NOR3 
+    - XNOR3 
+    - AO21
+    - MUX2
  - 3 Input multiplexers from which inputs can be selected from the 4 horizontal input lanes or the column carry chain
  - 8 Output multiplexers which determine the signals propagated to the CLBs above and to the right
  - 1 synchronously resettable D flip-flop with a fixed enable line and a shared column clock
 
+\* This was done to save space.
+![The CLB itself](docs/clb.png)
 ![Exploded CLB](docs/clb_exploded.png)
