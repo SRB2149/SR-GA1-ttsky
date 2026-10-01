@@ -42,6 +42,7 @@ async def test_scan_path(dut):
 
     # Scan in 1010101010101...
     for i in range(SCAN_PATH_LENGTH):
+        dut._log.info(f"Loading bit: {i}")
         val = LogicArray(dut.ui_in.value)
         val[0] = i % 2
         dut.ui_in.value = val
@@ -51,6 +52,7 @@ async def test_scan_path(dut):
 
     # Check the output is correct
     for i in range(SCAN_PATH_LENGTH):
+        dut._log.info(f"Reading bit: {i}")
         val = LogicArray(dut.ui_in.value)
         val[0] = 0
         dut.ui_in.value = val
