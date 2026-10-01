@@ -4,6 +4,7 @@
 import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import ClockCycles
+from cocotb.types import LogicArray
 
 import random
 
@@ -40,12 +41,16 @@ async def test_project(dut):
     seq = rand_seq(SCAN_PATH_LENGTH)
 
     # Scan in random values
-    for i in range(0, SCAN_PATH_LENGTH):
-        dut.ui_in.value[0] = seq[i]
+    for i in range(SCAN_PATH_LENGTH):
+        val = LogicArray(dut.ui_in.value)
+        val[0] = seq[i]
+        dut.ui_in.value = val
         await ClockCycles(dut.clk, 1)
-    
+
     # Check the output is correct
-    for i in range(0, SCAN_PATH_LENGTH):
-        dut.ui_in[0].value = 0
+    for i in range(SCAN_PATH_LENGTH):
+        val = LogicArray(dut.ui_in.value)
+        val[0] = 0
+        dut.ui_in.value = val
         await ClockCycles(dut.clk, 1)
-        assert dut.uo_out[0].value == seq[i]
+        assert dut.uo_out.value[0] == seq[i]
