@@ -67,7 +67,7 @@
   "FP_IO_VLENGTH": 2,
 
   "FP_PDN_VPITCH": 35.42,
-  "FP_PDN_VOFFSET": 21,
+  "FP_PDN_VOFFSET": 19,
   "FP_PDN_HORIZONTAL_LAYER": "met3",
 
   "//": "Clock",
