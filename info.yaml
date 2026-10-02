@@ -23,7 +23,6 @@ project:
     - "hdl/clock/clock_bank.sv"
     - "hdl/grid/clb_grid.sv"
     - "hdl/io/io_controller.sv"
-    - "hdl/mux/mux.sv"
     - "hdl/regs/shift_reg_no_reset.sv"
     - "hdl/top/sr-ga1.sv"
     - "logos/logos.v"

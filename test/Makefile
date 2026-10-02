@@ -6,7 +6,7 @@ SIM ?= icarus
 FST ?= -fst # Use more efficient FST format
 TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
-PROJECT_SOURCES = project.v hdl/top/sr-ga1.sv hdl/regs/shift_reg_no_reset.sv hdl/mux/mux.sv hdl/io/io_controller.sv hdl/grid/clb_grid.sv hdl/clock/clock_sel.sv hdl/clock/clock_bank.sv hdl/clb/clb.sv logos/logos.v
+PROJECT_SOURCES = project.v hdl/top/sr-ga1.sv hdl/regs/shift_reg_no_reset.sv hdl/io/io_controller.sv hdl/grid/clb_grid.sv hdl/clock/clock_sel.sv hdl/clock/clock_bank.sv hdl/clb/clb.sv logos/logos.v
 
 ifneq ($(GATES),yes)
 
