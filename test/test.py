@@ -9,7 +9,7 @@ from cocotb.types import LogicArray
 import random
 
 #CONSTANTS
-SCAN_PATH_LENGTH = 581 #20*28 + 3 * 7
+SCAN_PATH_LENGTH = 824 #25*32 + 3 * 8
 VERBOSE = True
 
 def rand_seq(length):
