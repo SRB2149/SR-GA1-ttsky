@@ -10,7 +10,7 @@ You can also include images in this folder and reference them in the markdown. E
 ## How it works
 
 My project is a small FPGA/CPLD-like device which I am calling the SR-GA1 (GA = gate array).
-It consists of a 4x7 grid of configurable logic blocks (CLBs) as well as some clock routing logic
+It consists of a 8x4 grid of configurable logic blocks (CLBs) as well as some clock routing logic
 and very basic IO control.
 
 Data is shifted in via fixed input 0 whilst being clocked with the system clock. The FPGA configuration shift register

@@ -3,9 +3,9 @@
 ![The SR-GA1 Logo](docs/logo.png)
 
 # An FPGA-lite device
-- 28 Configurable Logic Blocks (CLBs) in a 7x4 array
-- 7 Column clock controllers which can be chained or source from the FPGA fabric
-- Supports carry chains to easily build up to 4-bit adders.
+- 32 Configurable Logic Blocks (CLBs) in an 8x4 array
+- 8 Column clock controllers which can be chained or source from the FPGA fabric
+- Supports carry chains to easily build up-to-4-bit adders.
 - Simple shift in programming interface.
 - Has software toolchains for creating designs using (limited) [SystemVerilog](https://github.com/SRB2149/SR-GA1/tree/main/crates/sr-ga1-synth) or by hand via a [GUI](https://github.com/SRB2149/SR-GA1/tree/main/crates/fpgatool).
 - [Read the full documentation for project](docs/info.md)
