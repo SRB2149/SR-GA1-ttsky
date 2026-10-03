@@ -17,7 +17,7 @@
 
   "//": "CLOCK_PERIOD - Increase this in case you are getting setup time violations.",
   "//": "The value is in nanoseconds, so 1000ns == 1MHz.",
-  "CLOCK_PERIOD": 500,
+  "CLOCK_PERIOD": 1000,
 
   "//": "Hold slack margin - Increase them in case you are getting hold violations.",
   "PL_RESIZER_HOLD_SLACK_MARGIN": 0.1,
@@ -200,189 +200,189 @@
                                                  "sr_ga1_u.clb_grid_u.row[1].col[0].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   43.24,
-                                                                                                                  53.94
+                                                                                                                  54.19
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[1].col[1].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   74.74,
-                                                                                                                  53.94
+                                                                                                                  54.19
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[1].col[2].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   106.24,
-                                                                                                                  53.94
+                                                                                                                  54.19
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[1].col[3].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   137.74,
-                                                                                                                  53.94
+                                                                                                                  54.19
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[1].col[4].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   169.24,
-                                                                                                                  53.94
+                                                                                                                  54.19
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[1].col[5].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   200.74,
-                                                                                                                  53.94
+                                                                                                                  54.19
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[1].col[6].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   232.24,
-                                                                                                                  53.94
+                                                                                                                  54.19
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[1].col[7].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   263.74,
-                                                                                                                  53.94
+                                                                                                                  54.19
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[1].col[8].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   295.24,
-                                                                                                                  53.94
+                                                                                                                  54.19
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[2].col[0].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   43.24,
-                                                                                                                  102.44
+                                                                                                                  102.94
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[2].col[1].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   74.74,
-                                                                                                                  102.44
+                                                                                                                  102.94
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[2].col[2].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   106.24,
-                                                                                                                  102.44
+                                                                                                                  102.94
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[2].col[3].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   137.74,
-                                                                                                                  102.44
+                                                                                                                  102.94
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[2].col[4].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   169.24,
-                                                                                                                  102.44
+                                                                                                                  102.94
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[2].col[5].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   200.74,
-                                                                                                                  102.44
+                                                                                                                  102.94
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[2].col[6].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   232.24,
-                                                                                                                  102.44
+                                                                                                                  102.94
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[2].col[7].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   263.74,
-                                                                                                                  102.44
+                                                                                                                  102.94
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[2].col[8].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   295.24,
-                                                                                                                  102.44
+                                                                                                                  102.94
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[3].col[0].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   43.24,
-                                                                                                                  150.94
+                                                                                                                  151.69
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[3].col[1].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   74.74,
-                                                                                                                  150.94
+                                                                                                                  151.69
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[3].col[2].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   106.24,
-                                                                                                                  150.94
+                                                                                                                  151.69
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[3].col[3].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   137.74,
-                                                                                                                  150.94
+                                                                                                                  151.69
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[3].col[4].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   169.24,
-                                                                                                                  150.94
+                                                                                                                  151.69
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[3].col[5].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   200.74,
-                                                                                                                  150.94
+                                                                                                                  151.69
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[3].col[6].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   232.24,
-                                                                                                                  150.94
+                                                                                                                  151.69
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[3].col[7].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   263.74,
-                                                                                                                  150.94
+                                                                                                                  151.69
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              },
                                                  "sr_ga1_u.clb_grid_u.row[3].col[8].clb_u":  {
                                                                                                  "location":  [
                                                                                                                   295.24,
-                                                                                                                  150.94
+                                                                                                                  151.69
                                                                                                               ],
                                                                                                  "orientation":  "N"
                                                                                              }
