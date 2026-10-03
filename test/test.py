@@ -60,13 +60,13 @@ async def test_scan_path(dut):
     dut._log.info(f"Written {SCAN_PATH_LENGTH} bits into the programming shift register")
 
     # Check the output is correct
-    for i in range(SCAN_PATH_LENGTH):
+    for i in range(SCAN_PATH_LENGTH-1):
         dut._log.info(f"Reading bit: {i}")
         val = LogicArray(dut.ui_in.value)
         val[0] = 0
         dut.ui_in.value = val
         await ClockCycles(dut.clk, 1)
-        assert dut.uo_out.value[0] == 1
+        assert dut.uo_out.value[0] == seq[i+1]
     
     dut.rst_n.value = 1    
     dut._log.info(f"Read {SCAN_PATH_LENGTH} bits out of the programming shift register")
