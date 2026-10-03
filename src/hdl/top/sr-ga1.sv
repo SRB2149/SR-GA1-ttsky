@@ -114,7 +114,7 @@ module SR_GA1 (
         begin
             freeze_fabric <= '0;
         end
-        else if (reset && shift_data_in)
+        else if (shift_data_in)
         begin
             freeze_fabric <= '1;
         end
