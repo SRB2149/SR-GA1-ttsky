@@ -38,8 +38,8 @@ async def scan_in(dut, seq):
 async def test_scan_path(dut):
     dut._log.info("Start")
 
-    # Set the clock period to 250 ns (4 MHz)
-    clock = Clock(dut.clk, 250, unit="ns")
+    # Set the clock period to 1 us (1 MHz)
+    clock = Clock(dut.clk, 1, unit="us")
     cocotb.start_soon(clock.start())
 
     # Reset
