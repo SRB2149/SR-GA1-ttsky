@@ -107,7 +107,7 @@ module SR_GA1 (
     );
     
     // Programming anti-oscillation/output protection controller
-    always_latch
+    /*always_latch
     begin : prog_prot_latch
         if (reset && shift_clk && shift_data_in)
         begin
@@ -117,6 +117,8 @@ module SR_GA1 (
         begin
             freeze_fabric <= '0;
         end
-    end
+    end*/
+    
+    assign freeze_fabric = '0;
 
 endmodule
