@@ -9,8 +9,8 @@ from cocotb.types import LogicArray
 import random
 
 #CONSTANTS
-SCAN_PATH_LENGTH = 824 #25*32 + 3 * 8
-VERBOSE = True
+SCAN_PATH_LENGTH = 888 #25*32 + 3 * 8     + 64
+VERBOSE = True         #CLBs  + Clk Banks + IO controller
 
 def rand_seq(length):
     seq = []
