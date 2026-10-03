@@ -51,7 +51,5 @@ module tt_um_sr_ga1_srb2149 (
     CHIP_ART_initials art_initials_u ();
     (* keep *)
     CHIP_ART_logo art_logo_u ();
-    (* keep *)
-    CHIP_ART_name art_name_u ();
 
 endmodule

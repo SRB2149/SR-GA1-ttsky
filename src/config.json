@@ -35,7 +35,7 @@
   
   "//": "CHIP ART",
   "IGNORE_DISCONNECTED_MODULES": [
-      "art_initials_u", "art_name_u", "art_logo_u"],
+      "art_initials_u", "art_logo_u"],
   "ERROR_ON_DISCONNECTED_PINS": false,
   "FP_MACRO_HORIZONTAL_HALO": 2,
   "FP_MACRO_VERTICAL_HALO": 2,
@@ -407,16 +407,6 @@
       },
       "gds": ["src/logos/gds/CHIP_ART_logo.gds"],
       "lef": ["src/logos/lef/CHIP_ART_logo.lef"]
-    },
-    "CHIP_ART_name": {
-      "instances": {
-        "art_name_u": {
-          "location": [3, 50],
-          "orientation": "W"
-        }
-      },
-      "gds": ["src/logos/gds/CHIP_ART_name.gds"],
-      "lef": ["src/logos/lef/CHIP_ART_name.lef"]
     }
 },
   "//": "END GENERATED MACROS"
