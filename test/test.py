@@ -9,17 +9,17 @@ from cocotb.types import LogicArray
 import random
 
 #CONSTANTS
-SCAN_PATH_LENGTH = 888 #25*32 + 3 * 8     + 64
-VERBOSE = True         #CLBs  + Clk Banks + IO controller
+SCAN_PATH_LENGTH = 889 #25*32 + 3 * 8     + 64 + 1
+VERBOSE = True         #CLBs  + Clk Banks + IO controller + Start bit
 
 def rand_seq(length):
-    seq = []
+    seq = [1]
     for i in range(length):
         seq.append(random.randint(0,1))
     return seq
     
 def const_seq(length, val):
-    seq = []
+    seq = [1]
     for i in range(length):
         seq.append(val)
     return seq
@@ -48,8 +48,6 @@ async def test_scan_path(dut):
     dut.ui_in.value = 0
     dut.uio_in.value = 0
     dut.rst_n.value = 0
-    await ClockCycles(dut.clk, 10)
-    dut.rst_n.value = 1
 
     dut._log.info("Test scan path")
     
@@ -69,5 +67,6 @@ async def test_scan_path(dut):
         dut.ui_in.value = val
         await ClockCycles(dut.clk, 1)
         assert dut.uo_out.value[0] == 1
-        
+    
+    dut.rst_n.value = 1    
     dut._log.info(f"Read {SCAN_PATH_LENGTH} bits out of the programming shift register")
