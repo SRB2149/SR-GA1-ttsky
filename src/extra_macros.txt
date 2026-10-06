@@ -17,4 +17,14 @@
       },
       "gds": ["src/logos/gds/CHIP_ART_logo.gds"],
       "lef": ["src/logos/lef/CHIP_ART_logo.lef"]
+    },
+    "CHIP_ART_name": {
+      "instances": {
+        "art_name_u": {
+          "location": [3, 50],
+          "orientation": "W"
+        }
+      },
+      "gds": ["src/logos/gds/CHIP_ART_name.gds"],
+      "lef": ["src/logos/lef/CHIP_ART_name.lef"]
     }
