@@ -6,21 +6,21 @@ MACRO CLB
   CLASS BLOCK ;
   FOREIGN CLB ;
   ORIGIN 0.000 0.000 ;
-  SIZE 33.000 BY 48.750 ;
+  SIZE 35.420 BY 48.960 ;
   PIN VGND
     DIRECTION INOUT ;
     USE GROUND ;
     PORT
       LAYER met2 ;
-        RECT 7.880 2.480 9.480 46.480 ;
+        RECT 8.440 2.480 10.040 46.480 ;
     END
     PORT
       LAYER met2 ;
-        RECT 26.380 2.480 27.980 46.480 ;
+        RECT 28.740 2.480 30.340 46.480 ;
     END
     PORT
       LAYER met3 ;
-        RECT 1.140 24.220 31.980 25.820 ;
+        RECT 1.600 24.220 33.820 25.820 ;
     END
   END VGND
   PIN VPWR
@@ -28,15 +28,15 @@ MACRO CLB
     USE POWER ;
     PORT
       LAYER met2 ;
-        RECT 4.580 2.480 6.180 46.480 ;
+        RECT 5.140 2.480 6.740 46.480 ;
     END
     PORT
       LAYER met2 ;
-        RECT 23.080 2.480 24.680 46.480 ;
+        RECT 25.440 2.480 27.040 46.480 ;
     END
     PORT
       LAYER met3 ;
-        RECT 1.140 20.920 31.980 22.520 ;
+        RECT 1.600 20.920 33.820 22.520 ;
     END
   END VPWR
   PIN carry_in
@@ -45,7 +45,7 @@ MACRO CLB
     ANTENNAGATEAREA 0.196500 ;
     PORT
       LAYER met2 ;
-        RECT 29.990 0.000 30.270 4.000 ;
+        RECT 32.750 0.000 33.030 4.000 ;
     END
   END carry_in
   PIN carry_out
@@ -54,7 +54,7 @@ MACRO CLB
     ANTENNADIFFAREA 0.445500 ;
     PORT
       LAYER met2 ;
-        RECT 29.990 44.750 30.270 48.750 ;
+        RECT 32.750 44.960 33.030 48.960 ;
     END
   END carry_out
   PIN clk
@@ -63,7 +63,7 @@ MACRO CLB
     ANTENNAGATEAREA 0.852000 ;
     PORT
       LAYER met2 ;
-        RECT 20.790 44.750 21.070 48.750 ;
+        RECT 22.630 44.960 22.910 48.960 ;
     END
   END clk
   PIN clk_out
@@ -72,7 +72,7 @@ MACRO CLB
     ANTENNADIFFAREA 0.340600 ;
     PORT
       LAYER met2 ;
-        RECT 20.790 0.000 21.070 4.000 ;
+        RECT 22.630 0.000 22.910 4.000 ;
     END
   END clk_out
   PIN horz_bus_in[0]
@@ -117,7 +117,7 @@ MACRO CLB
     ANTENNADIFFAREA 0.445500 ;
     PORT
       LAYER met3 ;
-        RECT 29.000 2.760 33.000 3.360 ;
+        RECT 31.420 2.760 35.420 3.360 ;
     END
   END horz_bus_out[0]
   PIN horz_bus_out[1]
@@ -126,7 +126,7 @@ MACRO CLB
     ANTENNADIFFAREA 0.445500 ;
     PORT
       LAYER met3 ;
-        RECT 29.000 10.920 33.000 11.520 ;
+        RECT 31.420 10.920 35.420 11.520 ;
     END
   END horz_bus_out[1]
   PIN horz_bus_out[2]
@@ -135,7 +135,7 @@ MACRO CLB
     ANTENNADIFFAREA 0.445500 ;
     PORT
       LAYER met3 ;
-        RECT 29.000 19.080 33.000 19.680 ;
+        RECT 31.420 19.080 35.420 19.680 ;
     END
   END horz_bus_out[2]
   PIN horz_bus_out[3]
@@ -144,7 +144,7 @@ MACRO CLB
     ANTENNADIFFAREA 0.445500 ;
     PORT
       LAYER met3 ;
-        RECT 29.000 27.240 33.000 27.840 ;
+        RECT 31.420 27.240 35.420 27.840 ;
     END
   END horz_bus_out[3]
   PIN reset
@@ -153,7 +153,7 @@ MACRO CLB
     ANTENNAGATEAREA 0.196500 ;
     PORT
       LAYER met2 ;
-        RECT 25.390 44.750 25.670 48.750 ;
+        RECT 27.690 44.960 27.970 48.960 ;
     END
   END reset
   PIN reset_out
@@ -162,7 +162,7 @@ MACRO CLB
     ANTENNADIFFAREA 0.445500 ;
     PORT
       LAYER met2 ;
-        RECT 25.390 0.000 25.670 4.000 ;
+        RECT 27.690 0.000 27.970 4.000 ;
     END
   END reset_out
   PIN shift_clk
@@ -180,7 +180,7 @@ MACRO CLB
     ANTENNADIFFAREA 0.445500 ;
     PORT
       LAYER met3 ;
-        RECT 29.000 43.560 33.000 44.160 ;
+        RECT 31.420 43.560 35.420 44.160 ;
     END
   END shift_clk_out
   PIN shift_data_in
@@ -198,7 +198,7 @@ MACRO CLB
     ANTENNADIFFAREA 0.445500 ;
     PORT
       LAYER met3 ;
-        RECT 29.000 35.400 33.000 36.000 ;
+        RECT 31.420 35.400 35.420 36.000 ;
     END
   END shift_data_out
   PIN vert_bus_in[0]
@@ -216,7 +216,7 @@ MACRO CLB
     ANTENNAGATEAREA 0.196500 ;
     PORT
       LAYER met2 ;
-        RECT 6.990 0.000 7.270 4.000 ;
+        RECT 7.450 0.000 7.730 4.000 ;
     END
   END vert_bus_in[1]
   PIN vert_bus_in[2]
@@ -225,7 +225,7 @@ MACRO CLB
     ANTENNAGATEAREA 0.196500 ;
     PORT
       LAYER met2 ;
-        RECT 11.590 0.000 11.870 4.000 ;
+        RECT 12.510 0.000 12.790 4.000 ;
     END
   END vert_bus_in[2]
   PIN vert_bus_in[3]
@@ -234,7 +234,7 @@ MACRO CLB
     ANTENNAGATEAREA 0.196500 ;
     PORT
       LAYER met2 ;
-        RECT 16.190 0.000 16.470 4.000 ;
+        RECT 17.570 0.000 17.850 4.000 ;
     END
   END vert_bus_in[3]
   PIN vert_bus_out[0]
@@ -243,7 +243,7 @@ MACRO CLB
     ANTENNADIFFAREA 0.445500 ;
     PORT
       LAYER met2 ;
-        RECT 2.390 44.750 2.670 48.750 ;
+        RECT 2.390 44.960 2.670 48.960 ;
     END
   END vert_bus_out[0]
   PIN vert_bus_out[1]
@@ -252,7 +252,7 @@ MACRO CLB
     ANTENNADIFFAREA 0.445500 ;
     PORT
       LAYER met2 ;
-        RECT 6.990 44.750 7.270 48.750 ;
+        RECT 7.450 44.960 7.730 48.960 ;
     END
   END vert_bus_out[1]
   PIN vert_bus_out[2]
@@ -261,7 +261,7 @@ MACRO CLB
     ANTENNADIFFAREA 0.445500 ;
     PORT
       LAYER met2 ;
-        RECT 11.590 44.750 11.870 48.750 ;
+        RECT 12.510 44.960 12.790 48.960 ;
     END
   END vert_bus_out[2]
   PIN vert_bus_out[3]
@@ -270,60 +270,61 @@ MACRO CLB
     ANTENNADIFFAREA 0.445500 ;
     PORT
       LAYER met2 ;
-        RECT 16.190 44.750 16.470 48.750 ;
+        RECT 17.570 44.960 17.850 48.960 ;
     END
   END vert_bus_out[3]
   OBS
       LAYER nwell ;
-        RECT 1.190 2.635 31.930 46.325 ;
+        RECT 1.650 2.635 33.770 46.325 ;
       LAYER li1 ;
-        RECT 1.380 2.635 31.740 46.325 ;
+        RECT 1.840 2.635 33.580 46.325 ;
       LAYER met1 ;
-        RECT 1.380 2.480 31.740 46.480 ;
+        RECT 1.840 2.480 33.880 47.220 ;
       LAYER met2 ;
-        RECT 1.940 44.470 2.110 45.970 ;
-        RECT 2.950 44.470 4.300 45.970 ;
-        RECT 1.940 4.280 4.300 44.470 ;
-        RECT 1.940 2.875 2.110 4.280 ;
-        RECT 2.950 2.875 4.300 4.280 ;
-        RECT 6.460 44.470 6.710 45.970 ;
-        RECT 7.550 44.470 7.600 45.970 ;
-        RECT 6.460 4.280 7.600 44.470 ;
-        RECT 6.460 2.875 6.710 4.280 ;
-        RECT 7.550 2.875 7.600 4.280 ;
-        RECT 9.760 44.470 11.310 45.970 ;
-        RECT 12.150 44.470 15.910 45.970 ;
-        RECT 16.750 44.470 20.510 45.970 ;
-        RECT 21.350 44.470 22.800 45.970 ;
-        RECT 9.760 4.280 22.800 44.470 ;
-        RECT 9.760 2.875 11.310 4.280 ;
-        RECT 12.150 2.875 15.910 4.280 ;
-        RECT 16.750 2.875 20.510 4.280 ;
-        RECT 21.350 2.875 22.800 4.280 ;
-        RECT 24.960 44.470 25.110 45.970 ;
-        RECT 25.950 44.470 26.100 45.970 ;
-        RECT 24.960 4.280 26.100 44.470 ;
-        RECT 24.960 2.875 25.110 4.280 ;
-        RECT 25.950 2.875 26.100 4.280 ;
-        RECT 28.260 44.470 29.710 45.970 ;
-        RECT 30.550 44.470 31.180 45.970 ;
-        RECT 28.260 4.280 31.180 44.470 ;
-        RECT 28.260 2.875 29.710 4.280 ;
-        RECT 30.550 2.875 31.180 4.280 ;
+        RECT 2.950 46.760 7.170 47.250 ;
+        RECT 2.950 44.680 4.860 46.760 ;
+        RECT 2.400 4.280 4.860 44.680 ;
+        RECT 2.950 2.875 4.860 4.280 ;
+        RECT 7.020 44.680 7.170 46.760 ;
+        RECT 8.010 46.760 12.230 47.250 ;
+        RECT 8.010 44.680 8.160 46.760 ;
+        RECT 7.020 4.280 8.160 44.680 ;
+        RECT 7.020 2.875 7.170 4.280 ;
+        RECT 8.010 2.875 8.160 4.280 ;
+        RECT 10.320 44.680 12.230 46.760 ;
+        RECT 13.070 44.680 17.290 47.250 ;
+        RECT 18.130 44.680 22.350 47.250 ;
+        RECT 23.190 46.760 27.410 47.250 ;
+        RECT 23.190 44.680 25.160 46.760 ;
+        RECT 10.320 4.280 25.160 44.680 ;
+        RECT 10.320 2.875 12.230 4.280 ;
+        RECT 13.070 2.875 17.290 4.280 ;
+        RECT 18.130 2.875 22.350 4.280 ;
+        RECT 23.190 2.875 25.160 4.280 ;
+        RECT 27.320 44.680 27.410 46.760 ;
+        RECT 28.250 46.760 32.470 47.250 ;
+        RECT 28.250 44.680 28.460 46.760 ;
+        RECT 27.320 4.280 28.460 44.680 ;
+        RECT 27.320 2.875 27.410 4.280 ;
+        RECT 28.250 2.875 28.460 4.280 ;
+        RECT 30.620 44.680 32.470 46.760 ;
+        RECT 30.620 4.280 33.020 44.680 ;
+        RECT 30.620 2.875 32.470 4.280 ;
       LAYER met3 ;
-        RECT 4.400 43.160 28.600 44.025 ;
-        RECT 2.825 36.400 30.050 43.160 ;
-        RECT 4.400 35.000 28.600 36.400 ;
-        RECT 2.825 28.240 30.050 35.000 ;
-        RECT 4.400 26.840 28.600 28.240 ;
-        RECT 2.825 26.220 30.050 26.840 ;
-        RECT 2.825 22.920 30.050 23.820 ;
-        RECT 2.825 20.080 30.050 20.520 ;
-        RECT 4.400 18.680 28.600 20.080 ;
-        RECT 2.825 11.920 30.050 18.680 ;
-        RECT 4.400 10.520 28.600 11.920 ;
-        RECT 2.825 3.760 30.050 10.520 ;
-        RECT 4.400 2.895 28.600 3.760 ;
+        RECT 2.825 44.560 31.675 45.385 ;
+        RECT 4.400 43.160 31.020 44.560 ;
+        RECT 2.825 36.400 31.675 43.160 ;
+        RECT 4.400 35.000 31.020 36.400 ;
+        RECT 2.825 28.240 31.675 35.000 ;
+        RECT 4.400 26.840 31.020 28.240 ;
+        RECT 2.825 26.220 31.675 26.840 ;
+        RECT 2.825 22.920 31.675 23.820 ;
+        RECT 2.825 20.080 31.675 20.520 ;
+        RECT 4.400 18.680 31.020 20.080 ;
+        RECT 2.825 11.920 31.675 18.680 ;
+        RECT 4.400 10.520 31.020 11.920 ;
+        RECT 2.825 3.760 31.675 10.520 ;
+        RECT 4.400 2.895 31.020 3.760 ;
   END
 END CLB
 END LIBRARY

@@ -29,8 +29,8 @@ param(
     [int]$Cols = 8,
 
     # Extra spacing between cells, in um. 0 = macros abut directly.
-    [double]$RowGap = 1,
-    [double]$ColGap = 3,
+    [double]$RowGap = 0,
+    [double]$ColGap = 0,
 
     # Die area "x1 y1 x2 y2". Tiny Tapeout sets FP_SIZING to absolute but injects
     # DIE_AREA from the tile size at build time, so it is usually NOT in the
