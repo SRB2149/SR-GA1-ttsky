@@ -10,7 +10,7 @@ import random
 
 #CONSTANTS
 SCAN_PATH_LENGTH = 889 #25*32 + 3 * 8     + 64 + 1
-VERBOSE = True         #CLBs  + Clk Banks + IO controller + Start bit
+VERBOSE = False        #CLBs  + Clk Banks + IO controller + Start bit
 
 ROWS = 4
 COLUMNS = 8
