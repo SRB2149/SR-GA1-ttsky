@@ -193,7 +193,6 @@ async def test_scan_path(dut):
     dut.rst_n.value = 1
     dut._log.info(f"Read {SCAN_PATH_LENGTH} bits out of the programming shift register")
 
-'''
 # Shifts a random sequence through the scan path and checks it comes out unchanged
 @cocotb.test()
 async def test_scan_path_random(dut):
@@ -293,7 +292,7 @@ async def test_freeze(dut):
     dut.rst_n.value = 1
     dut._log.info("Freeze works")
 
-
+'''
 # Selects every one of the 16 input mux sources on mux 0a
 @cocotb.test()
 async def test_io_input_mux(dut):
