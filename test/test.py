@@ -132,7 +132,7 @@ async def program(dut, cfg):
     dut.rst_n.value = 1
     await Timer(1, unit="ns")
     
-    print("Programming complete")
+    dut._log.info("Programming complete")
 
 # chip_inputs[6:0] -> ui_in[7:1], chip_inputs[9:7] -> uio_in[2:0], ddio_in[1:0] -> uio_in[7:6]
 async def set_inputs(dut, chip_inputs, ddio_in=0):
@@ -598,7 +598,7 @@ async def test_vertical_routing(dut):
         assert chip_output(dut, 0) == n
 
     dut._log.info("Vertical routing works")
-'''
+    
 
 # CLB 0:0 register: enable, synchronous reset to both reset values and the register vertical lanes
 @cocotb.test()
@@ -661,7 +661,7 @@ async def test_clb_ff(dut):
             assert chip_output(dut, 3) == ff
 
     dut._log.info("CLB register works")
-
+'''
 
 # Every column clock from vertical buses 0 and 2 and coupled to the previous column clock
 @cocotb.test()
