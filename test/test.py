@@ -521,7 +521,7 @@ async def test_ripple_adder(dut):
 
     dut._log.info("Adder works")
 
-
+'''
 # Every minor horizontal and major output mux source on CLB 0:0 except the register (see test_clb_ff)
 @cocotb.test()
 async def test_clb_output_muxes(dut):
@@ -557,7 +557,7 @@ async def test_clb_output_muxes(dut):
                 assert chip_output(dut, 3) == h3_src[sel]
 
     dut._log.info("CLB output muxes work")
-'''
+
 
 # Snakes signals up column 0 through the vertical passthroughs and back round to the bottom
 @cocotb.test()
