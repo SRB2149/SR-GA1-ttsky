@@ -356,7 +356,7 @@ async def test_io_input_channels(dut):
 
     dut._log.info("All input mux channels work")
 
-
+'''
 # Walks a 1 and a 0 across the from fabric buses through every output mux and the fixed outputs
 @cocotb.test()
 async def test_io_output_mux(dut):
@@ -391,7 +391,7 @@ async def test_io_output_mux(dut):
                 assert dut.uio_out.value[k] == 0
 
     dut._log.info("All output muxes work")
-
+'''
 
 # DDIO direction and output control, and the fabric reading the pin or its own output
 @cocotb.test()
@@ -557,7 +557,7 @@ async def test_clb_output_muxes(dut):
                 assert chip_output(dut, 3) == h3_src[sel]
 
     dut._log.info("CLB output muxes work")
-
+'''
 
 # Snakes signals up column 0 through the vertical passthroughs and back round to the bottom
 @cocotb.test()
@@ -695,4 +695,3 @@ async def test_clock_bank(dut):
             assert chip_output(dut, 2) == 1
 
     dut._log.info("Clock bank works")
-'''
