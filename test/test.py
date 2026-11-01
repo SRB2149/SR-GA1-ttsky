@@ -224,7 +224,7 @@ async def test_scan_path_random(dut):
     dut.rst_n.value = 1
     dut._log.info("Random sequence read back correctly")
 
-'''
+
 # Outputs held low and DDIO set to input while programming, released when reset deasserted
 @cocotb.test()
 async def test_freeze(dut):
@@ -295,7 +295,7 @@ async def test_freeze(dut):
     dut.rst_n.value = 1
     dut._log.info("Freeze works")
 
-'''
+
 # Selects every one of the 16 input mux sources on mux 0a
 @cocotb.test()
 async def test_io_input_mux(dut):
