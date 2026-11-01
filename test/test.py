@@ -661,7 +661,7 @@ async def test_clb_ff(dut):
             assert chip_output(dut, 3) == ff
 
     dut._log.info("CLB register works")
-'''
+
 
 # Every column clock from vertical buses 0 and 2 and coupled to the previous column clock
 @cocotb.test()
@@ -697,3 +697,4 @@ async def test_clock_bank(dut):
             assert chip_output(dut, 2) == 1
 
     dut._log.info("Clock bank works")
+'''
