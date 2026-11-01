@@ -332,7 +332,7 @@ async def test_io_input_mux(dut):
 
     dut._log.info("All input mux sources work")
 
-'''
+
 # Checks all 8 input mux channels reach their own horizontal bus
 @cocotb.test()
 async def test_io_input_channels(dut):
@@ -557,7 +557,7 @@ async def test_clb_output_muxes(dut):
                 assert chip_output(dut, 3) == h3_src[sel]
 
     dut._log.info("CLB output muxes work")
-
+'''
 
 # Snakes signals up column 0 through the vertical passthroughs and back round to the bottom
 @cocotb.test()
