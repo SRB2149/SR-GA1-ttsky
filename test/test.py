@@ -131,6 +131,8 @@ async def program(dut, cfg):
     # Deassert reset to unfreeze the fabric
     dut.rst_n.value = 1
     await Timer(1, unit="ns")
+    
+    print("Programming complete")
 
 # chip_inputs[6:0] -> ui_in[7:1], chip_inputs[9:7] -> uio_in[2:0], ddio_in[1:0] -> uio_in[7:6]
 async def set_inputs(dut, chip_inputs, ddio_in=0):
@@ -557,7 +559,7 @@ async def test_clb_output_muxes(dut):
                 assert chip_output(dut, 3) == h3_src[sel]
 
     dut._log.info("CLB output muxes work")
-'''
+
 
 # Snakes signals up column 0 through the vertical passthroughs and back round to the bottom
 @cocotb.test()
@@ -596,7 +598,7 @@ async def test_vertical_routing(dut):
         assert chip_output(dut, 0) == n
 
     dut._log.info("Vertical routing works")
-
+'''
 
 # CLB 0:0 register: enable, synchronous reset to both reset values and the register vertical lanes
 @cocotb.test()
