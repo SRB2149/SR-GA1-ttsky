@@ -114,8 +114,9 @@ async def scan_in(dut, seq):
 
 # Full programming sequence. The clock is stopped afterwards since it is also the shift clock
 async def program(dut, cfg):
+    # Shift clock starts low so reset and the start bit are set up half a period before the first edge
     clock = Clock(dut.clk, 1, unit="us")
-    cocotb.start_soon(clock.start())
+    cocotb.start_soon(clock.start(start_high=False))
 
     # Assert reset with shift data low
     dut.ena.value = 1
