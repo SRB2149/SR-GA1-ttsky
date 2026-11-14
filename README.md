@@ -12,6 +12,10 @@
 - Has software toolchains for creating designs using (limited) [SystemVerilog](https://github.com/SRB2149/SR-GA1/tree/main/crates/sr-ga1-synth) or by hand via a [GUI](https://github.com/SRB2149/SR-GA1/tree/main/crates/fpgatool).
 - [Read the full documentation for project.](docs/info.md)
 
+![The chip's block diagram](docs/SR-GA1.png)
+
+# The Implemented Design
+
 ![The chip's final GDS](docs/gds.png)
 
 # The CLB
