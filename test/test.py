@@ -9,8 +9,8 @@ from cocotb.types import LogicArray
 import random
 
 #CONSTANTS
-SCAN_PATH_LENGTH = 889 #25*32 + 3 * 8     + 64 + 1
-VERBOSE = False        #CLBs  + Clk Banks + IO controller + Start bit
+SCAN_PATH_LENGTH = 893 #25*32 + 64            + 3 * 8     + 4              + 1
+VERBOSE = False        #CLBs  + IO controller + Clk Banks + Clock loopback + Start bit
 
 ROWS = 4
 COLUMNS = 8
@@ -23,6 +23,14 @@ LUT_PASS_C = 0xAA
 LUT_XOR_AB = 0x3C
 LUT_XOR3   = 0x96
 LUT_MAJ3   = 0xE8
+
+# Clock loopback controller sources
+CLK_LOOP_LOW      = 0
+CLK_LOOP_HIGH     = 1
+CLK_LOOP_WRAP     = 2  # Last column clock
+CLK_LOOP_WRAP_INV = 3  # Last column clock inverted (ring oscillator if every column is coupled)
+CLK_LOOP_INPUT0   = 4  # Chip inputs 0-9 on 4-13
+CLK_LOOP_DDIO0    = 14 # DDIO 0-1 on 14-15
 
 def rand_seq(length):
     seq = [1]
@@ -63,7 +71,8 @@ def new_config():
         "out_sel": [0] * 4,
         "ddio_out_sel": [0] * 2,
         "ddio_dir_sel": [0] * 2,
-        "clk_sel": [0] * COLUMNS    # Bus address 0-3, or 4 to couple to the previous column clock
+        "clk_sel": [0] * COLUMNS,   # Bus address 0-3, or 4 to couple to the previous column clock
+        "clk_loop_sel": CLK_LOOP_LOW # Source of the clock which column 0 couples to
     }
 
 # Drives the from fabric buses with a constant using the last two CLBs of each row
@@ -97,6 +106,9 @@ def build_bitstream(cfg):
     # Clock bank
     for sel in cfg["clk_sel"]:
         chain += to_bits(sel, 3)
+
+    # Clock loopback controller
+    chain += to_bits(cfg["clk_loop_sel"], 4)
 
     # First bit in ends up at the end of the chain so send it reversed after the start bit
     seq = [1] + chain[::-1]
@@ -680,6 +692,7 @@ async def test_clock_bank(dut):
             src = (col - 1) % COLUMNS if clk_sel == 4 else col
             cfg["clbs"][3][src] = clb_config(lut=LUT_PASS_A)
             cfg["clk_sel"][col] = clk_sel
+            cfg["clk_loop_sel"] = CLK_LOOP_WRAP # Column 0 couples to the last column
             cfg["in_sel"][0] = 0
             cfg["in_sel"][6] = FABRIC_CLK_INPUT
             cfg["out_sel"][2] = 2
@@ -697,3 +710,100 @@ async def test_clock_bank(dut):
             assert chip_output(dut, 2) == 1
 
     dut._log.info("Clock bank works")
+
+
+# Register in CLB 0:1 clocked through columns 0 and 1 coupled to the clock loopback controller.
+# CLB 0:0 holds the register enable high so no chip input is needed for it.
+def clock_loopback_config(clk_loop_sel, data_input, lut=LUT_PASS_A, reset_val=0):
+    cfg = new_config()
+    cfg["clbs"][0][0] = clb_config(h3_sel=1)
+    cfg["clbs"][0][1] = clb_config(lut=lut, h2_sel=5, reset_val=reset_val)
+    cfg["clk_sel"][0] = 4
+    cfg["clk_sel"][1] = 4
+    cfg["clk_loop_sel"] = clk_loop_sel
+    cfg["in_sel"][0] = data_input
+    cfg["out_sel"][2] = 2
+
+    # Bus 2 of row 3 driven low and used as the DDIO directions so they stay as inputs
+    cfg["clbs"][3][COLUMNS-1] = clb_config(h2_sel=0)
+    cfg["ddio_dir_sel"] = [14, 14]
+    return cfg
+
+# Every source of the clock loopback controller
+@cocotb.test()
+async def test_clock_loopback(dut):
+    dut._log.info("Start")
+
+    # Constant high: the only clock edge is the freeze being released, which loads the register.
+    # A constant LUT which agrees with the reset value is used so it doesn't matter what the chip
+    # inputs are or if the reset is still seen on that edge.
+    for lut, value in [(0x00, 0), (0xFF, 1)]:
+        dut._log.info(f"Clock loopback source {CLK_LOOP_HIGH}, loading {value}")
+        await program(dut, clock_loopback_config(CLK_LOOP_HIGH, 0, lut=lut, reset_val=value))
+        assert chip_output(dut, 2) == value
+        for n in range(16):
+            await set_inputs(dut, random.getrandbits(10), random.getrandbits(2))
+            assert chip_output(dut, 2) == value
+
+    # Constant low: no clock edges at all so the register keeps the 1 from above
+    dut._log.info(f"Clock loopback source {CLK_LOOP_LOW}")
+    await program(dut, clock_loopback_config(CLK_LOOP_LOW, 0))
+    assert chip_output(dut, 2) == 1
+    for n in range(16):
+        await set_inputs(dut, random.getrandbits(10), random.getrandbits(2))
+        assert chip_output(dut, 2) == 1
+
+    # Clocked sources. Not every column is coupled so the inverted wrap is not a ring oscillator.
+    for sel in range(CLK_LOOP_WRAP, 16):
+        dut._log.info(f"Clock loopback source {sel}")
+
+        # Pin which drives the clock and the level it is at when the active edge has happened
+        ddio_clk = sel >= CLK_LOOP_DDIO0
+        if ddio_clk:
+            clk_pin = sel - CLK_LOOP_DDIO0
+        elif sel >= CLK_LOOP_INPUT0:
+            clk_pin = sel - CLK_LOOP_INPUT0
+        else:
+            clk_pin = FABRIC_CLK_INPUT
+        active = 0 if sel == CLK_LOOP_WRAP_INV else 1
+        data_pin = 1 if (clk_pin == 0 and not ddio_clk) else 0
+
+        cfg = clock_loopback_config(sel, data_pin)
+        if sel < CLK_LOOP_INPUT0:
+            # Last column clocked from chip input 4 through the top CLB and vertical bus 0
+            cfg["clbs"][3][COLUMNS-1] = clb_config(lut=LUT_PASS_A, h2_sel=0)
+            cfg["in_sel"][6] = FABRIC_CLK_INPUT
+
+        await program(dut, cfg)
+
+        # Every other pin is randomised to check that only the selected one clocks the register
+        async def drive(data, clk_level, chip_rand, ddio_rand):
+            chip_in = (chip_rand & ~(1 << data_pin)) | (data << data_pin)
+            ddio_in = ddio_rand
+            if ddio_clk:
+                ddio_in = (ddio_in & ~(1 << clk_pin)) | (clk_level << clk_pin)
+            else:
+                chip_in = (chip_in & ~(1 << clk_pin)) | (clk_level << clk_pin)
+            await set_inputs(dut, chip_in, ddio_in)
+
+        ff = None
+        for data in [0, 1, 1, 0, 1, 0, 0, 1]:
+            # Other pins and the data change with the clock idle: nothing is captured
+            for n in range(4):
+                await drive(random.getrandbits(1), 1 - active, random.getrandbits(10), random.getrandbits(2))
+                if ff is not None:
+                    assert chip_output(dut, 2) == ff
+
+            # Active edge captures the data
+            chip_rand = random.getrandbits(10)
+            ddio_rand = random.getrandbits(2)
+            await drive(data, 1 - active, chip_rand, ddio_rand)
+            await drive(data, active, chip_rand, ddio_rand)
+            ff = data
+            assert chip_output(dut, 2) == ff
+
+            # Inactive edge doesn't
+            await drive(data, 1 - active, chip_rand, ddio_rand)
+            assert chip_output(dut, 2) == ff
+
+    dut._log.info("Clock loopback controller works")

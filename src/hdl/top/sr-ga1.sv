@@ -1,13 +1,14 @@
 // The top module of the SR-GA1 FPGA
 //
 // Bitstream information:
-//  Length: 828 bits
+//  Length: 892 bits
 //  Composition:
 //  Bit ranges | Configuration area
 // ------------+------------------------
 //     0-799   | CLB LUT and mux configs
 //   800-863   | IO controller config
-//   864-887   | Clock bank configs
+//   864-887   | Clock bank config
+//   888-891   | Clock loopback controller config
 //
 // To program:
 // 1) Assert reset after setting shift_data_in to 0
@@ -61,7 +62,15 @@ module SR_GA1 (
     // Configuration Routing
     logic clb_io_data_bridge;
     logic io_clk_data_bridge;
+    logic clk_ctrl_data_bridge;
     
+    // Clock Routing
+    logic [1:0] ddio_clk_ctrl_inputs;
+    logic       clk_bank_clk_in;
+    logic       clk_bank_clk_out;
+    logic       loopback_clk;
+    
+    // IO Controller
     IO_Controller io_controller_u (
         .shift_clk(shift_clk),
         .shift_data_in(clb_io_data_bridge),
@@ -73,9 +82,11 @@ module SR_GA1 (
         .ddio_dir(ddio_dir),
         .ddio_out(ddio_out),
         .from_fabric_buses(from_fabric_buses),
-        .to_fabric_buses(to_fabric_buses)
+        .to_fabric_buses(to_fabric_buses),
+        .ddio_for_clk_lpbck(ddio_clk_ctrl_inputs)
     );
 
+    // CLB Grid
     CLB_Grid #(
         .ROWS(4),
         .COLUMNS(COLUMNS)
@@ -96,16 +107,33 @@ module SR_GA1 (
         vertical_buses = freeze_fabric ? '0 : pregate_vertical_buses;
     end
     
+    // Clocks and clock control
     Clock_Bank # (
         .CLK_NUM(COLUMNS)
     ) clk_bank_u (
         .shift_clk(shift_clk),
         .shift_data_in(io_clk_data_bridge),
-        .shift_data_out(shift_data_out),
-        .freeze_fabric(freeze_fabric),
+        .shift_data_out(clk_ctrl_data_bridge),
         .buses(vertical_buses),
-        .clks(column_clks)
+        .clks(column_clks),
+        .clk_in(clk_bank_clk_in),
+        .clk_out(clk_bank_clk_out)  
     );
+    
+    Clock_Loopback_Controller clc_u (
+        .shift_clk(shift_clk),
+        .shift_data_in(clk_ctrl_data_bridge),
+        .shift_data_out(shift_data_out),
+        .inputs(inputs),
+        .ddio_inputs(ddio_clk_ctrl_inputs),
+        .clk_in(clk_bank_clk_out),
+        .clk_out(loopback_clk)
+    );
+    
+    always_comb
+    begin : clock_feedback_gating
+        clk_bank_clk_in = freeze_fabric ? '0 : loopback_clk;
+    end
     
     // Programming anti-oscillation/output protection controller
     // Synchronous to the shift clock

@@ -5,11 +5,14 @@ module Clock_Bank # (
     input   logic       shift_clk,
     input   logic       shift_data_in,
     output  logic       shift_data_out,
-    input   logic       freeze_fabric,
     
     // Fabric Connections
     input   logic [(4*CLK_NUM)-1:0] buses,
-    output  logic [CLK_NUM-1:0]     clks
+    output  logic [CLK_NUM-1:0]     clks,
+    
+    // Clock Wrapping
+    input   logic   clk_in,
+    output  logic   clk_out       
 );
 
     logic [CLK_NUM:0]   shift_data;
@@ -34,7 +37,7 @@ module Clock_Bank # (
             begin : clk_routing
                 if (i == 0)
                 begin
-                    prev_clk[i] = freeze_fabric ? '0 : clks[CLK_NUM-1];
+                    prev_clk[i] = clk_in;
                 end
                 else
                 begin
@@ -44,10 +47,14 @@ module Clock_Bank # (
         end
     endgenerate
     
+    // Continuous assignments rather than an always_comb block: a block which both writes and
+    // reads shift_data is not sensitive to it, so shift_data_out went stale in simulation
+    assign shift_data[0]  = shift_data_in;
+    assign shift_data_out = shift_data[CLK_NUM];
+    
     always_comb
-    begin : config_data_routing
-        shift_data[0] = shift_data_in;
-        shift_data_out = shift_data[CLK_NUM];
+    begin : clk_wrapping
+        clk_out = clks[CLK_NUM-1];
     end
     
 endmodule

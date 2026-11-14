@@ -149,7 +149,10 @@ module IO_Controller (
     
     // Fabric IO
     input   logic [15:0] from_fabric_buses,
-    output  logic [15:0] to_fabric_buses
+    output  logic [15:0] to_fabric_buses,
+    
+    // Muxed DDIO Outputs
+    output  logic [1:0] ddio_for_clk_lpbck
 );
     
     // Internal connections
@@ -181,6 +184,8 @@ module IO_Controller (
             ddio_dir[1] ? ddio_out[1] : ddio_in[1],
             ddio_dir[0] ? ddio_out[0] : ddio_in[0]
         };
+        
+        ddio_for_clk_lpbck = ddio_in_pre_mux;
         
         // Chip input multiplexer
         // 0  -  9: all chip inputs

@@ -21,6 +21,7 @@ project:
     - "hdl/clb/clb_blackbox.sv"
     - "hdl/clock/clock_sel.sv"
     - "hdl/clock/clock_bank.sv"
+    - "hdl/clock/clock_loopback_controller.sv"
     - "hdl/grid/clb_grid.sv"
     - "hdl/io/io_controller.sv"
     - "hdl/regs/shift_reg_no_reset.sv"
