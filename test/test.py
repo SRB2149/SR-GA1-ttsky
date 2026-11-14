@@ -3,7 +3,7 @@
 
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import ClockCycles, Timer
+from cocotb.triggers import ClockCycles, FallingEdge, Timer
 from cocotb.types import LogicArray
 
 import random
@@ -140,6 +140,10 @@ async def program(dut, cfg):
     # previous configuration by one bit while the fabric is still unfrozen
     await scan_in(dut, build_bitstream(cfg))
 
+    # Finish the last shift clock pulse before the clock is held low, so the final bit has settled
+    # before reset is released. Releasing reset on the last rising edge makes the configuration and
+    # the freeze change together, which glitches the column clocks at gate level.
+    await FallingEdge(dut.clk)
     clock.stop()
     dut.clk.value = 0
 
@@ -737,21 +741,29 @@ async def test_clock_loopback(dut):
     # Constant high: the only clock edge is the freeze being released, which loads the register.
     # A constant LUT which agrees with the reset value is used so it doesn't matter what the chip
     # inputs are or if the reset is still seen on that edge.
-    for lut, value in [(0x00, 0), (0xFF, 1)]:
+    for lut, value in [(0xFF, 1), (0x00, 0)]:
         dut._log.info(f"Clock loopback source {CLK_LOOP_HIGH}, loading {value}")
         await program(dut, clock_loopback_config(CLK_LOOP_HIGH, 0, lut=lut, reset_val=value))
+
+        # At gate level the freeze flop clears a unit delay after reset and only then does the
+        # clock rise, so the register needs longer than the wait at the end of program()
+        await Timer(2, unit="ns")
         assert chip_output(dut, 2) == value
         for n in range(16):
             await set_inputs(dut, random.getrandbits(10), random.getrandbits(2))
             assert chip_output(dut, 2) == value
 
-    # Constant low: no clock edges at all so the register keeps the 1 from above
+    # Constant low: no clock edges at all. The register contents are not defined after programming
+    # (at gate level the column clocks can glitch while the configuration shifts through), so
+    # whatever it holds must never be replaced by its inverse presented on the data input.
     dut._log.info(f"Clock loopback source {CLK_LOOP_LOW}")
     await program(dut, clock_loopback_config(CLK_LOOP_LOW, 0))
-    assert chip_output(dut, 2) == 1
-    for n in range(16):
-        await set_inputs(dut, random.getrandbits(10), random.getrandbits(2))
-        assert chip_output(dut, 2) == 1
+    await Timer(2, unit="ns")
+    held = int(chip_output(dut, 2))
+    for n in range(32):
+        chip_in = (random.getrandbits(10) & ~1) | (1 - held)
+        await set_inputs(dut, chip_in, random.getrandbits(2))
+        assert chip_output(dut, 2) == held
 
     # Clocked sources. Not every column is coupled so the inverted wrap is not a ring oscillator.
     for sel in range(CLK_LOOP_WRAP, 16):
