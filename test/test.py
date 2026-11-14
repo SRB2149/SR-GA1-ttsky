@@ -122,15 +122,17 @@ async def program(dut, cfg):
     dut.ui_in.value = 0
     dut.uio_in.value = 0
     dut.rst_n.value = 0
-    await ClockCycles(dut.clk, 1)
 
+    # The start bit must be the first shift clock edge: an idle clock would shift the
+    # previous configuration by one bit while the fabric is still unfrozen
     await scan_in(dut, build_bitstream(cfg))
 
     clock.stop()
+    dut.clk.value = 0
 
     # Deassert reset to unfreeze the fabric
     dut.rst_n.value = 1
-    await Timer(1, unit="ns")
+    await Timer(2, unit="ns")
     
     dut._log.info("Programming complete")
 
@@ -138,7 +140,7 @@ async def program(dut, cfg):
 async def set_inputs(dut, chip_inputs, ddio_in=0):
     dut.ui_in.value = (chip_inputs & 0x7F) << 1
     dut.uio_in.value = ((chip_inputs >> 7) & 0x7) | (ddio_in << 6)
-    await Timer(1, unit="ns")
+    await Timer(2, unit="ns")
 
 async def clock_fabric(dut, chip_inputs):
     await set_inputs(dut, chip_inputs | (1 << FABRIC_CLK_INPUT))
@@ -259,14 +261,14 @@ async def test_freeze(dut):
                 assert ddio_dir(dut, k) == 0
 
     clock.stop()
-    await Timer(1, unit="ns")
+    await Timer(2, unit="ns")
 
     # Still frozen until reset is deasserted
     for k in range(10):
         assert chip_output(dut, k) == 0
 
     dut.rst_n.value = 1
-    await Timer(1, unit="ns")
+    await Timer(2, unit="ns")
 
     for k in range(10):
         assert chip_output(dut, k) == 1
@@ -276,7 +278,7 @@ async def test_freeze(dut):
 
     # Reset alone doesn't freeze
     dut.rst_n.value = 0
-    await Timer(1, unit="ns")
+    await Timer(2, unit="ns")
     for k in range(10):
         assert chip_output(dut, k) == 1
 
@@ -285,7 +287,7 @@ async def test_freeze(dut):
     dut.clk.value = 0
     await Timer(500, unit="ns")
     dut.clk.value = 1
-    await Timer(1, unit="ns")
+    await Timer(2, unit="ns")
     for k in range(10):
         assert chip_output(dut, k) == 0
     for k in range(2):
@@ -358,7 +360,6 @@ async def test_io_input_channels(dut):
 
     dut._log.info("All input mux channels work")
 
-'''
 # Walks a 1 and a 0 across the from fabric buses through every output mux and the fixed outputs
 @cocotb.test()
 async def test_io_output_mux(dut):
@@ -393,7 +394,6 @@ async def test_io_output_mux(dut):
                 assert dut.uio_out.value[k] == 0
 
     dut._log.info("All output muxes work")
-'''
 
 # DDIO direction and output control, and the fabric reading the pin or its own output
 @cocotb.test()
@@ -523,7 +523,6 @@ async def test_ripple_adder(dut):
 
     dut._log.info("Adder works")
 
-'''
 # Every minor horizontal and major output mux source on CLB 0:0 except the register (see test_clb_ff)
 @cocotb.test()
 async def test_clb_output_muxes(dut):
@@ -634,7 +633,7 @@ async def test_clb_ff(dut):
 
         # Reset is synchronous and beats the enable
         dut.rst_n.value = 0
-        await Timer(1, unit="ns")
+        await Timer(2, unit="ns")
         assert chip_output(dut, 2) == ff
         assert chip_output(dut, 3) == ff
 
@@ -697,4 +696,3 @@ async def test_clock_bank(dut):
             assert chip_output(dut, 2) == 1
 
     dut._log.info("Clock bank works")
-'''
