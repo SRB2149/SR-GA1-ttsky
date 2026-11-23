@@ -7,7 +7,7 @@ You can also include images in this folder and reference them in the markdown. E
 512 kb in size, and the combined size of all images must be less than 1 MB.
 -->
 
-# How it works: an FPGA-lite device
+## How it works: an FPGA-lite device
 My project is a small FPGA/CPLD-like device which I am calling the SR-GA1 (GA = gate array).
 It consists of a 8x4 grid of configurable logic blocks (CLBs) as well as some clock routing logic
 and basic IO control.
@@ -21,7 +21,7 @@ and basic IO control.
 
 ![The chip's block diagram](SR-GA1.png)
 
-# The CLB
+## The CLB
 
  - Configurable as a LUT3 (represents 256 distinct logic functions) or 1 bit full adder.
  - 3 input multiplexers from which inputs can be selected from various input sources.
@@ -30,12 +30,13 @@ and basic IO control.
  - 1 synchronously resettable D flip-flop with a fixed enable line and a shared column clock.
  - 25 configuration flip-flops give over 32 million possible configurations.
 
-# Programming
+## Programming
 1. Assert reset after setting shift_data_in to 0
 2. Send bitstream including high start bit to freeze outputs when programming via shift_clk (positive edge clocked) and shift_data_in
 3. Deassert reset to unfreeze the outputs and allow internal oscillation
 
 If combinational: PROGRAMMING SEQUENCE END
+
 If synchronous requiring reset: CONTINUE
 
 4. Assert reset
