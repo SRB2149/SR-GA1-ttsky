@@ -19,7 +19,7 @@ and basic IO control.
  - Simple shift in programming interface.
  - Output protection and anti-oscillation measures for use during programming.
 
-![The chip's block diagram](docs/SR-GA1.png)
+![The chip's block diagram](SR-GA1.png)
 
 # The CLB
 
@@ -30,7 +30,7 @@ and basic IO control.
  - 1 synchronously resettable D flip-flop with a fixed enable line and a shared column clock.
  - 25 configuration flip-flops give over 32 million possible configurations.
 
-![The CLB itself](docs/clb_low_res.png)
+![The CLB itself](clb_low_res.png)
 
 # Programming
 1) Assert reset after setting shift_data_in to 0
