@@ -30,17 +30,17 @@ and basic IO control.
  - 1 synchronously resettable D flip-flop with a fixed enable line and a shared column clock.
  - 25 configuration flip-flops give over 32 million possible configurations.
 
-![The CLB itself](clb_low_res.png)
-
 # Programming
-1) Assert reset after setting shift_data_in to 0
-2) Send bitstream including high start bit to freeze outputs when programming via shift_clk (positive edge clocked) and shift_data_in
-3) Deassert reset to unfreeze the outputs and allow internal oscillation
+1. Assert reset after setting shift_data_in to 0
+2. Send bitstream including high start bit to freeze outputs when programming via shift_clk (positive edge clocked) and shift_data_in
+3. Deassert reset to unfreeze the outputs and allow internal oscillation
+
 If combinational: PROGRAMMING SEQUENCE END
 If synchronous requiring reset: CONTINUE
-4) Assert reset
-5) Clock the relevant flip-flops
-6) Deassert reset
+
+4. Assert reset
+5. Clock the relevant flip-flops
+6. Deassert reset
 PROGRAMMING SEQUENCE END
 
 Data is shifted in via fixed input 0 whilst being clocked with the system clock. The FPGA configuration shift register
