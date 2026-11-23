@@ -50,13 +50,13 @@ The reset pin is used to reset the data registers and is synchronous to the rele
 
 ## How to test
 
-First use my [FPGA programming software](https://github.com/SRB2149/SR-GA1) (currently out of date)
+First use my FPGA programming software at https://github.com/SRB2149/SR-GA1 (currently out of date)
 to create a design and then export the generated bitstream. Copy that bitstream to the RP2040
 and use my programmer script (not made yet) to setup the FPGA for use. Then drive the IO as you wish.
 
 ## External hardware
 
-You will need a computer which can run my FPGA programming software 
-(see my main [SR-GA1 Github](https://github.com/SRB2149/SR-GA1))
-to create the bitstream which can then be shifted into the FPGA. 
+You will need a computer which can run the FPGA programming software 
+(see my main SR-GA1 GitHub page at https://github.com/SRB2149/SR-GA1)
+to create the bitstream which can then be shifted into the FPGA.
 Beyond that, nothing is needed.
