@@ -7,7 +7,7 @@ You can also include images in this folder and reference them in the markdown. E
 512 kb in size, and the combined size of all images must be less than 1 MB.
 -->
 
-# An FPGA-lite device
+# How it works: an FPGA-lite device
 My project is a small FPGA/CPLD-like device which I am calling the SR-GA1 (GA = gate array).
 It consists of a 8x4 grid of configurable logic blocks (CLBs) as well as some clock routing logic
 and basic IO control.
